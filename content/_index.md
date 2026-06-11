@@ -5,7 +5,6 @@ weight: 1
 chapter: false
 ---
 
-    
 # Internship Report
 
 {{% notice warning %}}
@@ -13,25 +12,26 @@ chapter: false
 {{% /notice %}}
 
 ### Student Information:
-&emsp; **Full Name:** Nguyen Van A
 
-&emsp; **Phone Number:** 0989888999 
+&emsp; **Full Name:** Bien Thi My Phung
 
-&emsp; **Email:** Anguyenvan@gmail.com
+&emsp; **Phone Number:** 0355264692
 
-&emsp; **University:** Ho Chi Minh City University of Technology and Education
+&emsp; **Email:** bienthimyphung@gmail.com
+
+&emsp; **University:** Sai Gon University
 
 &emsp; **Major:** Information Technology
 
-&emsp; **Class:** AWS082025
+&emsp; **Class:** FCAJ - SGU - SS3
 
 &emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
 
 &emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
 
-&emsp; **Internship Duration:** From 12/08/2025 to 12/11/2025
+&emsp; **Internship Duration:** From 22/06/2026 to 15/08/2026
 
-![Your profile picture](/images/avatar.png)
+![Your profile picture](/images/avt-cv.jpg)
 
 ### Report Content
 
