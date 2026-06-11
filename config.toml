@@ -1,6 +1,5 @@
-baseURL = "https://myphungg.github.io/fcj-workshop-template/"
 relativeURLs = true
-canonifyURLs = true
+canonifyURLs = false
 defaultContentLanguage = "en"
 
 # Change the default theme to be use when building the site with Hugo
