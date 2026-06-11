@@ -1,4 +1,4 @@
-baseURL = "https://MyPhungg.github.io/fcj-workshop-template/"
+baseURL = "https://myphungg.github.io/fcj-workshop-template/"
 relativeURLs = false
 canonifyURLs = false
 defaultContentLanguage = "en"
@@ -14,7 +14,7 @@ home = [ "HTML", "RSS", "JSON"]
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "workshop"
   # Git hub repo link
-  editURL = "https://github.com/MyPhungg/fcj-workshop-template/edit/master/content/"
+  editURL = "https://github.com/myphungg/fcj-workshop-template/edit/master/content/"
   description = "Báo cáo kết quả thực hành workshop"
   author = "bienthimyphung@gmail.com"
   showVisitedLinks = true
