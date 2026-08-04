@@ -215,8 +215,8 @@ Tham gia buổi chia sẻ về cuộc thi **Agentic AI Build Week (AABW)** đã 
 
 ## Một số hình ảnh khi tham gia sự kiện
 
-![Hình ảnh tham gia sự kiện AABW 1](/images/4-EventParticipated/AABW_1.jpg)
-![Hình ảnh tham gia sự kiện AABW 2](/images/4-EventParticipated/AABW_2.jpg)
-![Hình ảnh tham gia sự kiện AABW 3](/images/4-EventParticipated/AABW_3.jpg)
+![Hình ảnh tham gia sự kiện AABW 1](/images/AABW_1.jpg)
+![Hình ảnh tham gia sự kiện AABW 2](/images/AABW_2.jpg)
+![Hình ảnh tham gia sự kiện AABW 3](/images/AABW_3.jpg)
 
 > Tổng thể, sự kiện đã giúp tôi mở rộng góc nhìn về Agentic AI, hiểu thêm cách các đội ngũ công nghệ xây dựng sản phẩm thực tế và nhận thức rõ hơn về vai trò của việc liên tục học hỏi trong thời đại AI.
