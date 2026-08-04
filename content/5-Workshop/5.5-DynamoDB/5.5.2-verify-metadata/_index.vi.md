@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.5.2 </b> "
 ---
 
-# Kiểm tra Metadata trong DynamoDB
-
 Sau khi tạo DynamoDB Table và cấu hình AWS Lambda có quyền ghi dữ liệu, bước này thực hiện kiểm tra metadata được lưu trữ sau khi quá trình xử lý ảnh hoàn tất.
 
 Mục tiêu kiểm tra:
@@ -19,7 +17,7 @@ Mục tiêu kiểm tra:
 
 ---
 
-# 1. Chuẩn bị quá trình kiểm tra
+### 1. Chuẩn bị quá trình kiểm tra
 
 Để tạo dữ liệu metadata trong DynamoDB, thực hiện upload một ảnh mẫu vào Input Bucket.
 
@@ -57,7 +55,7 @@ Sau khi Lambda hoàn thành xử lý, một item mới sẽ được tạo trong
 
 ---
 
-# 2. Truy cập DynamoDB Table
+### 2. Truy cập DynamoDB Table
 
 Mở:
 
@@ -77,11 +75,11 @@ Trong danh sách Tables, chọn:
 ImageMetadata
 ```
 
-![dynamodb-table](/images/5-Workshop/5.5-DynamoDB/verify-metadata/dynamodb-table.png)
+![dynamodb-table](/images/5-Workshop/5.5-DynamoDB/dynamodb-table.png)
 
 ---
 
-# 3. Truy cập dữ liệu trong Table
+### 3. Truy cập dữ liệu trong Table
 
 Trong giao diện DynamoDB Table:
 
@@ -99,11 +97,12 @@ Scan
 
 để xem các item đang được lưu trữ.
 
-![explore-items](/images/5-Workshop/5.5-DynamoDB/verify-metadata/explore-items.png)
+![explore-items](/images/5-Workshop/5.5-DynamoDB/press-explore.png)
+![explore-items](/images/5-Workshop/5.5-DynamoDB/explore-items.png)
 
 ---
 
-# 4. Kiểm tra Metadata Item
+### 4. Kiểm tra Metadata Item
 
 Sau khi Lambda xử lý thành công, DynamoDB sẽ chứa một item tương ứng với ảnh đã upload.
 
@@ -127,9 +126,9 @@ Ví dụ:
 
 ---
 
-# 5. Kiểm tra các trường dữ liệu quan trọng
+### 5. Kiểm tra các trường dữ liệu quan trọng
 
-## Batch Information
+#### Batch Information
 
 Kiểm tra:
 
@@ -156,7 +155,7 @@ processingId:
 
 ---
 
-## File Information
+#### File Information
 
 Kiểm tra:
 
@@ -180,7 +179,7 @@ Xác nhận ảnh đã được chuyển đổi sang định dạng tối ưu.
 
 ---
 
-## Processing Status
+#### Processing Status
 
 Kiểm tra:
 
@@ -191,7 +190,6 @@ status
 Các trạng thái:
 
 ```
-PENDING
 PROCESSING
 SUCCESS
 FAILED
@@ -209,7 +207,7 @@ cho biết quá trình xử lý hoàn thành thành công.
 
 ---
 
-## Storage Information
+#### Storage Information
 
 Kiểm tra:
 
@@ -238,7 +236,7 @@ Các thông tin này giúp liên kết metadata với file thực tế trong S3.
 
 ---
 
-# 6. Kiểm tra thông tin tối ưu hóa ảnh
+### 6. Kiểm tra thông tin tối ưu hóa ảnh
 
 DynamoDB lưu lại các thông số trước và sau khi xử lý:
 
@@ -274,7 +272,7 @@ Compression ratio:
 
 ---
 
-# 7. Kiểm tra trường hợp lỗi
+### 7. Kiểm tra trường hợp lỗi
 
 Trong trường hợp Lambda xử lý thất bại, DynamoDB sẽ lưu trạng thái:
 
@@ -303,7 +301,7 @@ Dữ liệu lỗi giúp hệ thống dễ dàng theo dõi và xử lý sự cố
 
 ---
 
-# 8. Kiểm tra dữ liệu bằng AWS CLI (Optional)
+### 8. Kiểm tra dữ liệu bằng AWS CLI (Optional)
 
 Có thể kiểm tra DynamoDB bằng AWS CLI:
 
@@ -331,7 +329,7 @@ Kết quả trả về danh sách metadata:
 
 ---
 
-# 9. Kết quả
+### 9. Kết quả
 
 Sau khi kiểm tra, DynamoDB đã lưu thành công metadata của ảnh được xử lý.
 

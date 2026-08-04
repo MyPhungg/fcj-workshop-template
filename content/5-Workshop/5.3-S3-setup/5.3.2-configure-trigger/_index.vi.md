@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.3.2 </b> "
 ---
 
-# Cấu hình S3 Trigger kích hoạt Lambda xử lý ảnh
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, AWS Lambda được sử dụng để tự động xử lý ảnh sau khi người dùng tải ảnh lên hệ thống.
 
 Để tự động kích hoạt Lambda, hệ thống sử dụng **Amazon S3 Event Notification**. Khi một ảnh mới được upload vào Input Bucket, S3 sẽ gửi sự kiện đến Lambda để thực hiện quá trình tối ưu hóa.
@@ -27,55 +25,33 @@ Luồng xử lý:
 
 ---
 
-## 1. Mở AWS Lambda Console
+### 1. Mở AWS Lambda Console
 
 Truy cập [AWS Lambda Console](https://console.aws.amazon.com/lambda/)
 
 Trong danh sách Lambda function, chọn function xử lý ảnh:
 
-```
-image-optimizer-lambda
-```
-
-![lambda-function](/images/5-Workshop/5.3-S3/lambda-function.png)
+![lambda-function](/images/5-Workshop/5.3-S3-setup/lambda-function.png)
 
 ---
 
-## 2. Thêm Trigger cho Lambda
+### 2. Thêm Trigger cho Lambda
 
-Trong giao diện Lambda:
+Trong giao diện Lambda, chọn Function overview, sau đó click Add trigger:
 
-Chọn:
-
-```
-Function overview
-```
-
-Sau đó click:
-
-```
-Add trigger
-```
-
-![add-trigger](/images/5-Workshop/5.3-S3/add-trigger.png)
+![add-trigger](/images/5-Workshop/5.3-S3-setup/add-trigger.png)
 
 ---
 
-## 3. Chọn Amazon S3 làm Trigger
+### 3. Chọn Amazon S3 làm Trigger
 
-Trong phần **Trigger configuration**:
+Trong phần **Trigger configuration**, chọn nguồn trigger Amazon S3:
 
-Chọn nguồn trigger:
-
-```
-Amazon S3
-```
-
-![select-s3-trigger](/images/5-Workshop/5.3-S3/select-s3-trigger.png)
+![select-s3-trigger](/images/5-Workshop/5.3-S3-setup/select-s3-trigger.png)
 
 ---
 
-## 4. Cấu hình S3 Trigger
+### 4. Cấu hình S3 Trigger
 
 Trong mục **Bucket**, chọn Input Bucket đã được tạo ở bước trước:
 
@@ -91,17 +67,17 @@ All object create events
 
 Sự kiện này sẽ được kích hoạt mỗi khi có một object mới được tạo trong bucket.
 
-![s3-trigger-config](/images/5-Workshop/5.3-S3/s3-trigger-config.png)
+![s3-trigger-config](/images/5-Workshop/5.3-S3-setup/s3-trigger-config.png)
 
 ---
 
-## 5. Cấu hình bộ lọc file
+### 5. Cấu hình bộ lọc file
 
 Để giới hạn các file được Lambda xử lý, có thể cấu hình filter theo đường dẫn hoặc định dạng file.
 
 Ví dụ:
 
-### Prefix
+#### Prefix
 
 ```
 uploads/
@@ -115,7 +91,7 @@ Ví dụ:
 uploads/user001/image01.jpg
 ```
 
-### Suffix
+#### Suffix
 
 ```
 .jpg
@@ -136,7 +112,7 @@ Ngoài việc sử dụng filter của S3 Trigger, Lambda vẫn thực hiện ki
 
 ---
 
-## 6. Cấp quyền cho S3 gọi Lambda
+### 6. Cấp quyền cho S3 gọi Lambda
 
 Khi tạo S3 Trigger, AWS tự động tạo quyền cho phép S3 gọi Lambda function.
 
@@ -156,26 +132,19 @@ s3.amazonaws.com
     lambda:InvokeFunction
 ```
 
-![lambda-permission](/images/5-Workshop/5.3-S3/lambda-permission.png)
+![lambda-permission](/images/5-Workshop/5.3-S3-setup/lambda-permission.png)
 
 ---
 
-## 7. Kiểm tra Trigger đã được tạo
+### 7. Kiểm tra Trigger đã được tạo
 
 Sau khi cấu hình thành công, trong phần **Function overview** của Lambda sẽ hiển thị kết nối:
 
-```
-Amazon S3
-      |
-      |
-image-optimizer-lambda
-```
-
-![trigger-complete](/images/5-Workshop/5.3-S3/trigger-complete.png)
+![trigger-complete](/images/5-Workshop/5.3-S3-setup/trigger-complete.png)
 
 ---
 
-## 8. Kiểm tra quá trình xử lý
+### 8. Kiểm tra quá trình xử lý
 
 Upload thử một ảnh vào Input Bucket:
 

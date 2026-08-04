@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.4 </b> "
 ---
 
-# Triển khai AWS Lambda xử lý ảnh
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, AWS Lambda đóng vai trò là thành phần xử lý chính, chịu trách nhiệm tự động tối ưu hóa hình ảnh sau khi người dùng tải ảnh lên hệ thống.
 
 Lambda được sử dụng theo mô hình **serverless**, giúp hệ thống có thể xử lý ảnh mà không cần quản lý máy chủ hoặc hạ tầng chạy ứng dụng.
@@ -46,11 +44,11 @@ AWS Lambda thực hiện các nhiệm vụ:
 
 ---
 
-# Các bước triển khai Lambda
+### Các bước triển khai Lambda
 
 Quá trình triển khai AWS Lambda được thực hiện qua các bước:
 
-## 5.4.1. Tạo Lambda Function
+#### 5.4.1. Tạo Lambda Function
 
 Tạo Lambda Function mới trên AWS Console, lựa chọn runtime phù hợp và cấu hình quyền thực thi cho Lambda.
 
@@ -62,7 +60,7 @@ Lambda sử dụng IAM Role để truy cập các dịch vụ AWS cần thiết:
 
 ---
 
-## 5.4.2. Cấu hình Lambda Function
+#### 5.4.2. Cấu hình Lambda Function
 
 Sau khi tạo Lambda, tiến hành cấu hình:
 
@@ -86,24 +84,7 @@ Những thông tin này giúp Lambda có thể hoạt động linh hoạt mà kh
 
 ---
 
-## 5.4.3. Kết nối S3 Trigger
-
-Để Lambda có thể tự động xử lý ảnh, hệ thống cấu hình S3 Event Notification.
-
-Khi có ảnh mới được upload vào Input Bucket:
-
-```
-S3 Object Created Event
-          |
-          v
-AWS Lambda Function
-```
-
-S3 sẽ tự động gọi Lambda để bắt đầu quá trình tối ưu hóa ảnh.
-
----
-
-## 5.4.4. Kiểm thử quá trình xử lý
+#### 5.4.3. Kiểm thử quá trình xử lý
 
 Sau khi hoàn thành cấu hình, tiến hành kiểm thử toàn bộ quy trình:
 
@@ -126,7 +107,7 @@ status = SUCCESS
 
 ---
 
-# Vai trò của Lambda trong hệ thống
+### Vai trò của Lambda trong hệ thống
 
 Việc sử dụng AWS Lambda giúp hệ thống:
 
@@ -142,5 +123,4 @@ Sau khi hoàn thành triển khai Lambda, hệ thống có khả năng tự đ�
 
 - [Tạo AWS Lambda Function](5.4.1-create-lambda/)
 - [Cấu hình AWS Lambda Function](5.4.2-configure-lambda/)
-- [Cấu hình S3 Event Trigger cho AWS Lambda](5.4.3-add-S3-trigger/)
-- [Kiểm tra quá trình xử lý ảnh bằng AWS Lambda](5.4.4-test-processing/)
+- [Kiểm tra quá trình xử lý ảnh bằng AWS Lambda](5.4.3-test-upload/)

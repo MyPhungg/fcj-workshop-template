@@ -19,4 +19,3 @@ Việc sử dụng Amazon S3 giúp hệ thống lưu trữ dữ liệu với đ�
 
 - [Tạo các S3 Bucket lưu trữ ảnh](5.3.1-create-buckets/)
 - [Cấu hình S3 Trigger cho AWS Lambda](5.3.2-configure-trigger/)
-- [Kiểm tra quá trình upload và xử lý ảnh](5.3.3-test-upload/)

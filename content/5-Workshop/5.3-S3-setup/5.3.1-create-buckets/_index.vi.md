@@ -129,6 +129,28 @@ Sau đó chọn KMS Key được tạo cho hệ thống.
 Việc sử dụng AWS KMS giúp bảo vệ ảnh gốc khi lưu trữ trên Amazon S3.
 
 ![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/open-kms-dashboard.png)
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-2.png)
+Nhập tên alias:
+
+```
+image-optimization-kms
+```
+
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-3.png)
+
+Chọn IAM user quản lý hệ thống:
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-4.png)
+
+Thêm IAM Role của Lambda:
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-5.png)
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-6.png)
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-7.png)
+
+Chọn KMS Key vừa tạo và nhấn Create bucket:
+![s3-kms-encryption](/images/5-Workshop/5.3-S3-setup/kms-8.png)
+
+Vậy là ta đã có Input bucket:
+![create-input-bucket](/images/5-Workshop/5.3-S3-setup/create-input-bucket.png)
 
 ---
 
@@ -163,7 +185,8 @@ thumbnails/
             └── image.webp
 ```
 
-![create-output-bucket](/images/5-Workshop/5.3-S3/create-output-bucket.png)
+Vậy là ta đã có Output bucket:
+![create-output-bucket](/images/5-Workshop/5.3-S3-setup/create-output-bucket.png)
 
 ---
 
@@ -176,7 +199,7 @@ Sau khi hoàn tất, trong danh sách Amazon S3 Bucket sẽ hiển thị:
 | auto-images-input-bucket  | Lưu trữ ảnh gốc người dùng tải lên |
 | auto-images-output-bucket | Lưu trữ ảnh đã tối ưu và thumbnail |
 
-![bucket-list](/images/5-Workshop/5.3-S3/bucket-list.png)
+![bucket-list](/images/5-Workshop/5.3-S3-setup/s3-dashboard.png)
 
 ---
 

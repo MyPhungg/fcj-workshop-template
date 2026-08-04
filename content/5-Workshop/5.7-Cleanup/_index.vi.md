@@ -6,24 +6,22 @@ chapter: false
 pre: " <b> 5.7 </b> "
 ---
 
-# Dọn dẹp tài nguyên AWS sau triển khai
+Sau khi hoàn thành quá trình triển khai hệ thống **Automatic Image Optimization System on AWS**, cần tiến hành dọn dẹp các tài nguyên AWS không còn sử dụng nhằm tránh phát sinh chi phí ngoài mong muốn và đảm bảo môi trường AWS luôn được quản lý hiệu quả.
 
-Sau khi hoàn thành quá trình triển khai hệ thống **Automatic Image Optimization System on AWS**, cần thực hiện dọn dẹp các tài nguyên AWS không còn sử dụng để tránh phát sinh chi phí ngoài mong muốn.
+Việc dọn dẹp (Cleanup) mang lại các lợi ích sau:
 
-Việc cleanup giúp:
-
-- Xóa các tài nguyên thử nghiệm.
-- Giảm chi phí vận hành AWS.
-- Tránh việc để lại các dịch vụ chạy nền không cần thiết.
-- Đảm bảo tài khoản AWS luôn được quản lý hiệu quả.
+- Xóa các tài nguyên được tạo trong quá trình thử nghiệm.
+- Giảm chi phí vận hành trên AWS.
+- Tránh để các dịch vụ chạy nền không cần thiết.
+- Đảm bảo tài khoản AWS luôn được quản lý gọn gàng và an toàn.
 
 ---
 
-# Các tài nguyên cần kiểm tra trước khi xóa
+### Các tài nguyên cần kiểm tra trước khi xóa
 
-Trong hệ thống này, các tài nguyên AWS đã được triển khai gồm:
+Trong hệ thống này, các tài nguyên AWS đã được triển khai bao gồm:
 
-```
+```text
 AWS Resources
 
 ├── Amazon S3
@@ -48,52 +46,65 @@ AWS Resources
 
 ---
 
-# 1. Xóa dữ liệu trong S3 Bucket
+### 1. Xóa dữ liệu trong Amazon S3 Bucket
 
-Trước khi xóa S3 Bucket, cần xóa toàn bộ object bên trong.
+Trước khi xóa một S3 Bucket, cần xóa toàn bộ các đối tượng (Objects) bên trong Bucket.
 
-Các bucket cần kiểm tra:
+Các Bucket cần kiểm tra:
 
-```
+```text
 auto-images-input-bucket
 
 auto-images-output-bucket
 ```
 
-Thực hiện:
+Thực hiện theo các bước sau:
 
-1. Truy cập Amazon S3 Console.
+1. Truy cập **Amazon S3 Console**.
+
+![s3](/images/5-Workshop/5.7-Cleanup/s3_console.jpg)
+
 2. Chọn Bucket cần xóa.
-3. Chọn toàn bộ object.
+
+![s3](/images/5-Workshop/5.7-Cleanup/s3_bucket_select.jpg)
+
+3. Chọn toàn bộ các Object trong Bucket.
+
+![s3](/images/5-Workshop/5.7-Cleanup/s3_object.jpg)
+
 4. Chọn:
 
-```
+```text
 Delete
 ```
 
-5. Xác nhận xóa dữ liệu.
+5. Xác nhận xóa toàn bộ dữ liệu.
+
+![s3](/images/5-Workshop/5.7-Cleanup/s3_delete_confirm.jpg)
 
 {{% notice warning %}}
-Cần kiểm tra dữ liệu trước khi xóa vì thao tác xóa object trong S3 có thể không khôi phục được.
+Hãy kiểm tra kỹ dữ liệu trước khi xóa. Sau khi Object trong Amazon S3 bị xóa, dữ liệu có thể không thể khôi phục.
 {{% /notice %}}
 
 ---
 
-# 2. Xóa S3 Bucket
+### 2. Xóa Amazon S3 Bucket
 
-Sau khi đã xóa toàn bộ dữ liệu:
+Sau khi đã xóa toàn bộ dữ liệu trong Bucket, tiến hành xóa Bucket.
 
 Chọn:
 
-```
+```text
 Delete bucket
 ```
 
-Nhập tên bucket để xác nhận.
+![s3](/images/5-Workshop/5.7-Cleanup/s3_delete_bucket.jpg)
+
+Nhập tên Bucket để xác nhận thao tác xóa.
 
 Ví dụ:
 
-```
+```text
 auto-images-input-bucket
 
 auto-images-output-bucket
@@ -101,176 +112,199 @@ auto-images-output-bucket
 
 ---
 
-# 3. Xóa AWS Lambda Function
+### 3. Xóa AWS Lambda Function
 
 Truy cập:
 
-```
+```text
 AWS Lambda Console
 ```
 
-Chọn:
+![Lambda](/images/5-Workshop/5.7-Cleanup/s3_lambda_console.jpg)
 
-```
+Chọn Function:
+
+```text
 image-optimizer-lambda
 ```
 
-Chọn:
+![Lambda](/images/5-Workshop/5.7-Cleanup/s3_lambda_select.jpg)
 
-```
+Tiếp theo chọn:
+
+```text
 Actions
-    |
-    Delete function
+    └── Delete function
 ```
 
-Lambda Function sẽ bị xóa khỏi hệ thống.
+![Lambda](/images/5-Workshop/5.7-Cleanup/s3_lambda_delete_confirm.jpg)
+
+Sau khi xác nhận, Lambda Function sẽ được xóa khỏi hệ thống.
 
 ---
 
-# 4. Xóa DynamoDB Table
+### 4. Xóa bảng Amazon DynamoDB
 
 Truy cập:
 
-```
+```text
 Amazon DynamoDB
 ```
 
-Chọn Table:
+![DynamoDB](/images/5-Workshop/5.7-Cleanup/db_console.jpg)
 
-```
+Chọn bảng:
+
+```text
 ImageMetadata
 ```
 
+![DynamoDB](/images/5-Workshop/5.7-Cleanup/db_select.jpg)
+
 Chọn:
 
-```
+```text
 Delete table
 ```
 
-Xác nhận:
+Xác nhận thao tác:
 
-```
+![DynamoDB](/images/5-Workshop/5.7-Cleanup/db_delete_confirm.jpg)
+
+```text
 Delete
 ```
 
-Sau khi xóa, toàn bộ metadata lưu trữ trong bảng sẽ bị loại bỏ.
+Sau khi hoàn tất, toàn bộ metadata được lưu trong bảng sẽ bị xóa.
 
 ---
 
-# 5. Xóa CloudWatch Logs
+### 5. Xóa CloudWatch Logs
 
-CloudWatch Logs có thể tiếp tục lưu trữ sau khi Lambda bị xóa.
+Ngay cả khi Lambda Function đã bị xóa, các Log Group trong Amazon CloudWatch vẫn có thể tiếp tục được lưu trữ và phát sinh chi phí.
 
 Truy cập:
 
-```
+```text
 Amazon CloudWatch
 ```
 
+![CloudWatch](/images/5-Workshop/5.7-Cleanup/cw_console.jpg)
+
 Chọn:
 
-```
+```text
 Logs
-    |
-    Log groups
+    └── Log groups
 ```
 
-Xóa log group:
+![CloudWatch](/images/5-Workshop/5.7-Cleanup/cw_select.jpg)
 
-```
+Xóa Log Group:
+
+![CloudWatch](/images/5-Workshop/5.7-Cleanup/cw_log_delete.jpg)
+
+```text
 /aws/lambda/image-optimizer-lambda
 ```
 
 ---
 
-# 6. Xóa SNS Topic
+### 6. Xóa Amazon SNS Topic
 
 Truy cập:
 
-```
+```text
 Amazon SNS
 ```
 
+![SNS](/images/5-Workshop/5.7-Cleanup/sns_console.jpg)
+
 Chọn Topic:
 
-```
+```text
 image-processing-alerts
 ```
 
+![SNS](/images/5-Workshop/5.7-Cleanup/sns_select.jpg)
+
 Chọn:
 
-```
+```text
 Delete topic
 ```
 
-SNS Subscription cũng sẽ được xóa theo Topic.
+![SNS](/images/5-Workshop/5.7-Cleanup/sns_delete_confirm.jpg)
+
+Sau khi Topic bị xóa, các Subscription liên kết với Topic này cũng sẽ bị xóa.
 
 ---
 
-# 7. Kiểm tra IAM Role
+### 7. Kiểm tra IAM Role
 
-Sau khi xóa Lambda, kiểm tra IAM Role:
+Sau khi xóa Lambda Function, kiểm tra IAM Role:
 
-```
+```text
 image-optimizer-lambda-role
 ```
 
-Nếu không còn Lambda nào sử dụng:
-
-Có thể xóa Role để tránh dư thừa quyền truy cập.
+Nếu Role không còn được sử dụng bởi bất kỳ Lambda Function hoặc dịch vụ AWS nào khác, có thể tiến hành xóa để tránh tồn tại các quyền truy cập không cần thiết.
 
 {{% notice note %}}
-Không nên xóa IAM Role nếu tài khoản vẫn còn sử dụng cho các Lambda Function hoặc dịch vụ khác.
+Không nên xóa IAM Role nếu Role đó vẫn đang được sử dụng bởi các Lambda Function hoặc dịch vụ AWS khác.
 {{% /notice %}}
 
 ---
 
-# 8. Kiểm tra Billing
+### 8. Kiểm tra AWS Billing
 
-Sau khi cleanup, kiểm tra chi phí AWS:
+Sau khi hoàn tất quá trình Cleanup, cần kiểm tra chi phí phát sinh trên AWS.
 
 Truy cập:
 
-```
+```text
 AWS Billing Console
 ```
 
-Kiểm tra:
+![Billing](/images/5-Workshop/5.7-Cleanup/aws_bill.jpg)
 
-- S3 Storage.
-- Lambda Requests.
-- DynamoDB Usage.
-- CloudWatch Logs.
-- SNS Requests.
+Kiểm tra các dịch vụ sau:
 
-Đảm bảo không còn tài nguyên phát sinh chi phí.
+- Amazon S3 Storage
+- AWS Lambda Requests
+- Amazon DynamoDB Usage
+- Amazon CloudWatch Logs
+- Amazon SNS Requests
+
+Đảm bảo rằng không còn tài nguyên nào tiếp tục phát sinh chi phí ngoài mong muốn.
 
 ---
 
-# Kết quả
+### Kết quả
 
-Sau khi hoàn thành cleanup:
+Sau khi hoàn thành quá trình dọn dẹp tài nguyên:
 
-- Các tài nguyên thử nghiệm được xóa.
-- Không còn dịch vụ AWS chạy ngoài mục đích sử dụng.
+- Các tài nguyên được tạo trong quá trình thử nghiệm đã được xóa.
+- Không còn các dịch vụ AWS chạy ngoài mục đích sử dụng.
 - Giảm nguy cơ phát sinh chi phí không mong muốn.
+- Môi trường AWS được trả về trạng thái sạch, sẵn sàng cho các lần triển khai tiếp theo.
 
-Quy trình triển khai hoàn chỉnh:
+Toàn bộ quy trình triển khai của hệ thống được thực hiện theo trình tự sau:
 
-```
+```text
 5.3 S3 Deployment
-        |
-        v
+        │
+        ▼
 5.4 Lambda Deployment
-        |
-        v
+        │
+        ▼
 5.5 DynamoDB Deployment
-        |
-        v
+        │
+        ▼
 5.6 Monitoring
-        |
-        v
+        │
+        ▼
 5.7 Clean Up
 ```
 
-Hệ thống **Automatic Image Optimization System on AWS** đã hoàn thành toàn bộ quá trình triển khai, kiểm thử và quản lý tài nguyên AWS.
+Như vậy, hệ thống **Automatic Image Optimization System on AWS** đã hoàn thành toàn bộ quy trình từ triển khai, kiểm thử, giám sát đến dọn dẹp tài nguyên trên nền tảng AWS.

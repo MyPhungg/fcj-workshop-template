@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.5. </b> "
 ---
 
-# Lưu trữ Metadata bằng Amazon DynamoDB
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, Amazon DynamoDB được sử dụng để lưu trữ metadata của các hình ảnh trong quá trình xử lý.
 
 Sau khi AWS Lambda hoàn thành quá trình tối ưu hóa ảnh, thông tin xử lý sẽ được ghi vào DynamoDB nhằm phục vụ việc:
@@ -20,7 +18,7 @@ Sau khi AWS Lambda hoàn thành quá trình tối ưu hóa ảnh, thông tin x�
 
 ---
 
-# 1. Tổng quan thiết kế DynamoDB
+### 1. Tổng quan thiết kế DynamoDB
 
 Hệ thống sử dụng DynamoDB Table:
 
@@ -68,7 +66,7 @@ Trong đó:
 
 ---
 
-# 2. Luồng lưu trữ Metadata
+### 2. Luồng lưu trữ Metadata
 
 Quá trình lưu dữ liệu vào DynamoDB:
 
@@ -104,7 +102,7 @@ Sau khi Lambda hoàn thành quá trình xử lý:
 
 ---
 
-# 3. Triển khai DynamoDB
+### 3. Triển khai DynamoDB
 
 Quá trình triển khai DynamoDB gồm hai bước:
 
@@ -118,7 +116,7 @@ Quá trình triển khai DynamoDB gồm hai bước:
 
 ---
 
-## 5.5.1-create-dynamodb
+#### 5.5.1-create-dynamodb
 
 Trong bước này, thực hiện:
 
@@ -151,7 +149,7 @@ processingId
 
 ---
 
-## 5.5.2-verify-metadata
+#### 5.5.2-verify-metadata
 
 Sau khi Lambda xử lý ảnh thành công, tiến hành kiểm tra dữ liệu được ghi vào DynamoDB.
 
@@ -180,7 +178,7 @@ Ví dụ dữ liệu:
 
 ---
 
-# 4. Kết quả
+### 4. Kết quả
 
 Sau khi hoàn thành triển khai DynamoDB, hệ thống có khả năng lưu trữ và quản lý metadata của các ảnh được xử lý.
 
@@ -204,9 +202,6 @@ Kiến trúc lưu trữ metadata:
                       |
                       |
               ImageMetadata Table
-                      |
-                      |
-          Image Processing History
 ```
 
 Sau bước này, hệ thống đã hoàn thiện phần lưu trữ metadata cho quy trình tối ưu hóa ảnh tự động.

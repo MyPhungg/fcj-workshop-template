@@ -6,39 +6,45 @@ chapter: false
 pre: " <b> 5.4.2 </b> "
 ---
 
-# Cấu hình AWS Lambda Function xử lý ảnh
-
 Sau khi tạo Lambda Function, bước tiếp theo là cấu hình các thành phần cần thiết để Lambda có thể thực hiện quá trình tối ưu hóa ảnh trong hệ thống **Automatic Image Optimization System on AWS**.
 
 Các cấu hình bao gồm:
 
 - Upload source code xử lý ảnh.
-- Cấu hình biến môi trường.
-- Điều chỉnh tài nguyên thực thi.
-- Cấp quyền truy cập đến các AWS Service cần thiết.
+- Cấu hình Handler.
+- Cấu hình Environment Variables.
+- Thiết lập tài nguyên thực thi.
+- Kiểm tra quyền truy cập AWS Service thông qua Execution Role.
+- Gắn Lambda Layer chứa thư viện Pillow.
 
 ---
 
-# 1. Upload source code cho Lambda
+### 1. Upload source code cho Lambda
 
-Truy cập vào Lambda Function:
+Truy cập Lambda Function:
 
 ```
-image-optimizer-lambda
+
+autoImageProcessing
+
 ```
 
 Trong tab:
 
 ```
+
 Code
+
 ```
 
 Chọn:
 
 ```
+
 Upload from
-    |
-    +--> .zip file
+|
++--> .zip file
+
 ```
 
 Upload file source code chứa chương trình xử lý ảnh.
@@ -46,48 +52,56 @@ Upload file source code chứa chương trình xử lý ảnh.
 Cấu trúc source code:
 
 ```
+
 lambda-function/
 │
 ├── lambda_function.py
-├── requirements.txt
-└── package/
-    └── Pillow libraries
+└── requirements.txt
+
 ```
 
 Trong đó:
 
 - `lambda_function.py`: chứa logic xử lý sự kiện từ Amazon S3.
-- `Pillow`: thư viện dùng để đọc, resize và tối ưu hình ảnh.
-- `boto3`: thư viện tương tác với các dịch vụ AWS.
+- `boto3`: thư viện dùng để tương tác với các dịch vụ AWS.
+- `Pillow`: được cung cấp thông qua Lambda Layer.
 
-![upload-code](/images/5-Workshop/5.4-Lambda/configure-lambda/upload-code.png)
+{{% notice note %}}
+Thư viện Pillow không được đóng gói trực tiếp cùng source code. Lambda sử dụng Lambda Layer riêng để cung cấp thư viện xử lý ảnh, đảm bảo môi trường chạy tương thích với AWS Lambda Linux.
+{{% /notice %}}
 
 ---
 
-# 2. Cấu hình Handler
+### 2. Cấu hình Handler
 
 Trong phần:
 
 ```
+
 Runtime settings
+
 ```
 
 Chọn:
 
 ```
+
 Edit
+
 ```
 
 Cấu hình Handler:
 
 ```
+
 lambda_function.lambda_handler
+
 ```
 
 Giải thích:
 
 - `lambda_function`: tên file Python chứa source code.
-- `lambda_handler`: tên function được AWS Lambda gọi khi có event xảy ra.
+- `lambda_handler`: tên function entry point được AWS Lambda gọi khi nhận sự kiện từ S3.
 
 Ví dụ:
 
@@ -96,11 +110,61 @@ def lambda_handler(event, context):
     # Process S3 event
 ```
 
-![lambda-handler](/images/5-Workshop/5.4-Lambda/configure-lambda/handler.png)
+---
+
+### 3. Gắn Lambda Layer cho Pillow
+
+Do Lambda sử dụng thư viện Pillow để xử lý ảnh, cần gắn Lambda Layer chứa thư viện này.
+
+Truy cập:
+
+```
+Lambda Function
+    |
+    +--> Code
+    |
+    +--> Layers
+```
+
+Chọn:
+
+```
+Add a layer
+```
+
+Chọn:
+
+```
+Custom layers
+```
+
+Chọn layer:
+
+```
+pillow-layer
+```
+
+Runtime tương thích:
+
+```
+Python 3.14
+```
+
+Sau khi thêm layer, Lambda có thể sử dụng:
+
+```python
+from PIL import Image
+```
+
+để thực hiện:
+
+- Resize ảnh.
+- Nén ảnh.
+- Tạo thumbnail.
 
 ---
 
-# 3. Cấu hình Environment Variables
+### 4. Cấu hình Environment Variables
 
 Lambda sử dụng Environment Variables để lưu các thông tin cấu hình thay vì ghi trực tiếp trong source code.
 
@@ -118,44 +182,40 @@ Chọn:
 Edit
 ```
 
-Thêm các biến môi trường:
+Thêm biến môi trường:
 
-| Key            | Value                     |
-| -------------- | ------------------------- |
-| OUTPUT_BUCKET  | auto-images-output-bucket |
-| METADATA_TABLE | ImageMetadata             |
-| MAX_WIDTH      | 1024                      |
-| JPEG_QUALITY   | 80                        |
-| THUMB_SIZE     | 150                       |
+| Key            | Value         |
+| -------------- | ------------- |
+| METADATA_TABLE | ImageMetadata |
 
-Ví dụ:
+Biến này được Lambda sử dụng trong quá trình:
 
-```
-OUTPUT_BUCKET=
-auto-images-output-bucket
+<!-- - Xác định Output Bucket lưu ảnh tối ưu. -->
 
-METADATA_TABLE=
-ImageMetadata
-```
-
-Các biến này được Lambda sử dụng trong quá trình:
-
-- Xác định bucket lưu ảnh đã tối ưu.
 - Lưu metadata vào DynamoDB.
-- Thiết lập kích thước ảnh.
-- Cấu hình chất lượng nén.
+  <!-- - Thiết lập kích thước resize. -->
+  <!-- - Cấu hình chất lượng nén ảnh. -->
+  <!-- - Tạo thumbnail. -->
 
-![environment-variable](/images/5-Workshop/5.4-Lambda/configure-lambda/environment-variable.png)
+![environment-variable](/images/5-Workshop/5.4-Lambda-deployment/environment-variable.png)
 
 {{% notice note %}}
-Việc sử dụng Environment Variables giúp tách biệt cấu hình và source code, giúp dễ dàng thay đổi tài nguyên AWS mà không cần chỉnh sửa chương trình.
+Việc sử dụng Environment Variables giúp tách biệt cấu hình và source code, giúp dễ dàng thay đổi AWS Resource mà không cần chỉnh sửa chương trình.
 {{% /notice %}}
 
 ---
 
-# 4. Cấu hình tài nguyên thực thi
+### 5. Cấu hình tài nguyên thực thi
 
-Do quá trình xử lý ảnh yêu cầu tải ảnh từ S3, resize và tạo thumbnail, Lambda cần được cấu hình tài nguyên phù hợp.
+Quá trình xử lý ảnh yêu cầu Lambda thực hiện:
+
+- Download ảnh từ Input Bucket.
+- Resize ảnh.
+- Tạo thumbnail.
+- Upload ảnh kết quả.
+- Ghi metadata vào DynamoDB.
+
+Do đó Lambda cần được cấu hình tài nguyên phù hợp.
 
 Truy cập:
 
@@ -171,9 +231,9 @@ Chọn:
 Edit
 ```
 
-Cấu hình:
+---
 
-## Memory
+#### Memory
 
 Thiết lập:
 
@@ -185,29 +245,29 @@ Memory cao hơn giúp cải thiện hiệu suất xử lý ảnh bằng thư vi�
 
 ---
 
-## Timeout
+#### Timeout
 
 Thiết lập:
 
 ```
-1 minute
+30 sec
 ```
 
-Lambda có đủ thời gian để thực hiện:
+Lambda có đủ thời gian để:
 
-- Download ảnh từ Input Bucket.
-- Xử lý và tối ưu hình ảnh.
+- Đọc ảnh từ S3.
+- Thực hiện tối ưu hóa.
 - Tạo thumbnail.
-- Upload ảnh kết quả.
-- Ghi metadata vào DynamoDB.
+- Upload kết quả.
+- Lưu metadata.
 
-![lambda-resource](/images/5-Workshop/5.4-Lambda/configure-lambda/resource.png)
+![lambda-resource](/images/5-Workshop/5.4-Lambda-deployment/resource.png)
 
 ---
 
-# 5. Cấu hình IAM Permission cho Lambda
+### 6. Kiểm tra IAM Permission cho Lambda
 
-Lambda cần quyền truy cập đến các AWS Service được sử dụng trong hệ thống.
+Lambda sử dụng Execution Role để truy cập các AWS Service trong quá trình xử lý.
 
 Truy cập:
 
@@ -217,54 +277,87 @@ Configuration
     +--> Permissions
 ```
 
-Chọn Execution Role:
+Kiểm tra Execution Role:
 
 ```
-image-optimizer-lambda-role
+LambdaExecutionRole
 ```
 
-IAM Role cần được cấp các quyền:
+IAM Role cần chứa các quyền:
 
 ---
 
-## Amazon S3
+#### Amazon S3
 
-Các quyền cần thiết:
+Các quyền:
 
 ```
+
 s3:GetObject
 s3:PutObject
+
 ```
 
 Mục đích:
 
 - Đọc ảnh gốc từ Input Bucket.
-- Upload ảnh đã tối ưu vào Output Bucket.
+- Upload ảnh tối ưu và thumbnail vào Output Bucket.
 
 ---
 
-## Amazon DynamoDB
+#### Amazon DynamoDB
 
 Các quyền:
 
 ```
+
 dynamodb:PutItem
 dynamodb:UpdateItem
+
 ```
 
 Mục đích:
 
-- Lưu thông tin xử lý ảnh.
-- Cập nhật trạng thái xử lý.
+- Lưu metadata xử lý ảnh.
+- Cập nhật trạng thái:
+
+```
+
+PROCESSING
+SUCCESS
+FAILED
+
+```
 
 ---
 
-## CloudWatch Logs
+#### AWS KMS
+
+Các quyền:
+
+```
+
+kms:Decrypt
+kms:Encrypt
+kms:GenerateDataKey
+
+```
+
+Mục đích:
+
+- Cho phép Lambda truy cập dữ liệu được mã hóa bằng KMS.
+- Hỗ trợ quá trình đọc và ghi object trên S3 sử dụng Server-Side Encryption.
+
+---
+
+#### CloudWatch Logs
 
 Quyền:
 
 ```
+
 AWSLambdaBasicExecutionRole
+
 ```
 
 Mục đích:
@@ -273,57 +366,63 @@ Mục đích:
 - Theo dõi lỗi trong quá trình xử lý.
 
 {{% notice warning %}}
-Trong môi trường thực tế, không nên sử dụng các policy Full Access. Hệ thống nên sử dụng IAM Policy giới hạn đúng các tài nguyên mà Lambda cần truy cập theo nguyên tắc Least Privilege.
+Trong môi trường thực tế, không nên sử dụng các policy Full Access. IAM Policy nên giới hạn đúng các quyền mà Lambda cần sử dụng theo nguyên tắc Least Privilege.
 {{% /notice %}}
 
 ---
 
-# 6. Cấu hình mã hóa
+### 7. Kiểm tra cấu hình mã hóa
 
-Hệ thống sử dụng AWS KMS để bảo vệ dữ liệu.
+Hệ thống sử dụng AWS KMS để bảo vệ dữ liệu lưu trữ trên Amazon S3.
 
-Trong phần cấu hình Lambda:
-
-```
-Configuration
-    |
-    +--> Environment variables
-```
-
-Kiểm tra:
+Các Bucket:
 
 ```
-Encryption configuration
+
+Input Bucket
+Output Bucket
+
 ```
 
-Các thông tin cấu hình quan trọng có thể được mã hóa bằng AWS KMS Key nhằm đảm bảo an toàn dữ liệu.
+được cấu hình sử dụng KMS Key.
+
+Lambda truy cập các dữ liệu này thông qua Execution Role:
+
+```
+
+LambdaExecutionRole
+
+```
 
 ---
 
-# 7. Lưu cấu hình Lambda
+### 8. Lưu cấu hình Lambda
 
 Sau khi hoàn tất các thay đổi:
 
 Click:
 
 ```
+
 Save
+
 ```
 
-AWS Lambda sẽ cập nhật lại cấu hình mới cho function.
+AWS Lambda sẽ cập nhật cấu hình mới cho function.
 
 ---
 
-# 8. Kiểm tra cấu hình hoàn tất
+### 9. Kiểm tra cấu hình hoàn tất
 
-Sau khi cấu hình thành công, Lambda Function có thông tin:
+Sau khi cấu hình thành công:
 
 ```
+
 Function name:
-image-optimizer-lambda
+autoImageProcessing
 
 Runtime:
-Python 3.12
+Python 3.14
 
 Handler:
 lambda_function.lambda_handler
@@ -332,44 +431,60 @@ Memory:
 512 MB
 
 Timeout:
-1 minute
+30 sec
 
 Environment:
 Configured
 
+Layer:
+pillow-layer
+
 Execution Role:
-image-optimizer-lambda-role
+image-optimizer-role
+
 ```
+
+![lambda-configured](/images/5-Workshop/5.4-Lambda-deployment/resource.png)
 
 ---
 
-# 9. Kết quả
+### 10. Kết quả
 
-Sau bước này, Lambda Function đã được chuẩn bị đầy đủ để thực hiện quá trình xử lý ảnh.
+Sau bước này, Lambda Function đã được chuẩn bị đầy đủ để xử lý ảnh tự động.
 
 Kiến trúc hiện tại:
 
 ```
-                Amazon S3
-                    |
-                    |
-            S3 Event Trigger
-                    |
-                    v
-        image-optimizer-lambda
-                    |
-        +-----------+-----------+
-        |                       |
-        v                       v
- Optimize Image          Generate Thumbnail
-        |                       |
-        +-----------+-----------+
-                    |
-                    v
-          Output S3 Bucket
-                    |
-                    v
-             DynamoDB Metadata
+
+                Backend API
+                     |
+                     |
+                     v
+              Input S3 Bucket
+                     |
+                     |
+            S3 Object Created Event
+                     |
+                     v
+          autoImageProcessing Lambda
+                     |
+        +------------+------------+
+        |                         |
+        v                         v
+
+Optimize Image Generate Thumbnail
+| |
++------------+------------+
+|
+v
+Output S3 Bucket
+|
+v
+DynamoDB Metadata
+|
+v
+CloudWatch Logs
+
 ```
 
-Lambda Function sẽ tiếp tục được kết nối với **S3 Event Trigger** trong bước tiếp theo.
+Lambda Function sẽ tiếp tục được cấu hình **S3 Event Trigger** trong bước tiếp theo.
