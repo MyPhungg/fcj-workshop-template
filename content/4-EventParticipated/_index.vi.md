@@ -1,6 +1,6 @@
 ---
 title: "Các events đã tham gia"
-date: 2026-08-15
+date: 2026-08-04
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
@@ -28,13 +28,13 @@ Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là
 
 &emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự
+&emsp;**Vai trò trong sự kiện:** Người tham gia thi đấu
 
 ### [Event 2](4.2-Event2/)
 
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+&emsp;**Tên sự kiện:** FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
+&emsp;**Thời gian:** 09:00 ngày 25/07/2025
 
 &emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
 
