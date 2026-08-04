@@ -1,14 +1,10 @@
 ---
 title: "Event 2"
-date: 2024-01-01
+date: 2026-08-04
 weight: 1
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 # Bài thu hoạch “FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!”
 
@@ -22,6 +18,7 @@ pre: " <b> 4.2. </b> "
 ## Danh Sách Diễn Giả
 
 - **Giuseppe Marazzotta** - Head of Technology, AWS
+- Các team đã tham gia AABW.
 
 ## Nội Dung Nổi Bật
 
