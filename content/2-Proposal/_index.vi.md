@@ -48,7 +48,7 @@ Hệ thống cung cấp giao diện web cho phép người dùng:
 
 Ngoài ra, quản trị viên có thể theo dõi thống kê sử dụng và quản lý tài khoản người dùng.
 
-#### Lợi ích và ROI
+#### Lợi ích và hoàn vốn đầu tư (ROI)
 
 Hệ thống giúp giảm đáng kể thời gian tối ưu hóa hình ảnh thủ công, đồng thời tiết kiệm dung lượng lưu trữ và băng thông truyền tải. Việc tự động hóa toàn bộ quy trình giúp giảm công sức quản lý, nâng cao hiệu quả làm việc và dễ dàng mở rộng khi số lượng người dùng tăng lên.
 
@@ -174,17 +174,17 @@ Chi phí chủ yếu đến từ các dịch vụ AWS.
 
 #### Chiến lược giảm thiểu
 
-- Theo dõi log bằng CloudWatch.
-- Gửi cảnh báo qua SNS.
-- Kiểm tra định dạng và kích thước ảnh trước khi xử lý.
-- Áp dụng IAM theo nguyên tắc quyền tối thiểu.
-- Sử dụng AWS KMS để bảo vệ dữ liệu.
+- Sử dụng Amazon CloudWatch Logs để theo dõi hoạt động của AWS Lambda và hỗ trợ phân tích lỗi trong quá trình xử lý ảnh.
+- Sử dụng Amazon SNS để gửi cảnh báo đến quản trị viên khi quá trình tối ưu hóa ảnh xảy ra lỗi.
+- Kiểm tra định dạng và kích thước file ảnh trước khi đưa vào quá trình xử lý nhằm hạn chế lỗi từ dữ liệu đầu vào.
+- Áp dụng IAM Role với quyền truy cập tối thiểu cho các dịch vụ AWS nhằm tăng cường bảo mật.
+- Sử dụng AWS KMS để mã hóa dữ liệu hình ảnh lưu trữ trên Amazon S3.
 
 #### Kế hoạch dự phòng
 
-- Lưu metadata để có thể xử lý lại khi cần.
-- Retry khi Lambda gặp lỗi tạm thời.
-- Khôi phục cấu hình AWS thông qua Infrastructure as Code nếu cần.
+- Lưu trữ metadata và trạng thái xử lý trong Amazon DynamoDB giúp quản trị viên theo dõi lịch sử và xác định nguyên nhân khi xảy ra lỗi.
+- Duy trì log xử lý trên Amazon CloudWatch để hỗ trợ kiểm tra và khắc phục sự cố.
+- Sao lưu thông tin cấu hình quan trọng của hệ thống AWS nhằm hỗ trợ khôi phục khi cần thiết.
 
 ---
 
