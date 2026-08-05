@@ -1,7 +1,8 @@
-relativeURLs = true
-canonifyURLs = true
+relativeURLs = false
+canonifyURLs = false
 defaultContentLanguage = "en"
-
+defaultContentLanguageInSubdir = false
+baseURL = "http://localhost:1313/"
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
 
