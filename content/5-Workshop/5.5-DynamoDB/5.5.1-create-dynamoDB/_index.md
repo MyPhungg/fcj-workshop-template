@@ -1,57 +1,374 @@
 ---
-title : "Prepare the environment"
-date : 2024-01-01
-weight : 1
-chapter : false
-pre : " <b> 5.4.1 </b> "
+title: "Create DynamoDB Tables for Metadata Storage"
+date: 2026-08-04
+weight: 1
+chapter: false
+pre: " <b> 5.5.1 </b> "
 ---
 
-To prepare for this part of the workshop you will need to:
-+ Deploying a CloudFormation stack 
-+ Modifying a VPC route table. 
+In the **Automatic Image Optimization System on AWS**, Amazon DynamoDB is used to store the system's metadata.
 
-These components work together to simulate on-premises DNS forwarding and name resolution.
+DynamoDB includes two main tables:
 
-#### Deploy the CloudFormation stack
+- **UserMetadata**: stores user information for user management and links image data to user accounts.
+- **ImageMetadata**: stores information about image uploads, processing, and optimization performed by AWS Lambda.
 
-The CloudFormation template will create additional services to support an on-premises simulation:
-+ One Route 53 Private Hosted Zone that hosts Alias records for the PrivateLink S3 endpoint
-+ One Route 53 Inbound Resolver endpoint that enables "VPC Cloud" to resolve inbound DNS resolution requests to the Private Hosted Zone
-+ One Route 53 Outbound Resolver endpoint that enables "VPC On-prem" to forward DNS requests for S3 to "VPC Cloud"
+The **ImageMetadata** table is used to track:
 
-![route 53 diagram](/images/5-Workshop/5.4-Lambda-deployment/route53.png)
+- Image file name.
+- Image owner.
+- Source bucket and output bucket information.
+- Paths to the original image, optimized image, and thumbnail.
+- Processing status.
+- Image size before and after optimization.
+- Processing time.
+- Error information if image processing fails.
 
-1. Click the following link to open the [AWS CloudFormation console](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/reinvent-endpoints-builders-session/R53CF.yaml&stackName=PLOnpremSetup). The required template will be pre-loaded into the menu. Accept all default and click Create stack.
+---
 
-![Create stack](/images/5-Workshop/5.4-Lambda-deployment/create-stack.png)
+### 1. DynamoDB Overview in the System
 
-![Button](/images/5-Workshop/5.4-Lambda-deployment/create-stack-button.png)
+Metadata storage architecture:
 
-It may take a few minutes for stack deployment to complete. You can continue with the next step without waiting for the deployemnt to finish.
+```
+User
+|
+|
+v
+UserMetadata
+|
+|
+userId
+|
+|
+v
+Image Upload
+|
+|
+v
+ImageMetadata
+|
+|
+AWS Lambda Processing
+```
 
-#### Update on-premise private route table
+The system uses two DynamoDB tables:
 
-This workshop uses a strongSwan VPN running on an EC2 instance to simulate connectivty between an on-premises datacenter and the AWS cloud. Most of the required components are provisioned before your start. To finalize the VPN configuration, you will modify the "VPC On-prem" routing table to direct traffic destined for the cloud to the strongSwan VPN instance.
+| Table | Purpose |
+| ------------- | ---------------------------------- |
+| UserMetadata | Stores user account information |
+| ImageMetadata | Stores image processing metadata |
 
-1. Open the Amazon EC2 console 
+---
 
-2. Select the instance named infra-vpngw-test. From the Details tab, copy the Instance ID and paste this into your text editor
+### 2. Create the ImageMetadata Table
 
-![ec2 id](/images/5-Workshop/5.4-Lambda-deployment/ec2-onprem-id.png)
+#### Access the Amazon DynamoDB Console
 
-3. Navigate to the VPC menu by using the Search box at the top of the browser window.
+Open:
 
-4. Click on Route Tables, select the RT Private On-prem route table, select the Routes tab, and click Edit Routes.
+```
+AWS Management Console
+```
 
-![rt](/images/5-Workshop/5.4-Lambda-deployment/rt.png)
+Search for the service:
 
-5. Click Add route.
-+ Destination: your Cloud VPC cidr range
-+ Target: ID of your infra-vpngw-test instance (you saved in your editor at step 1)
+```
+DynamoDB
+```
 
-![add route](/images/5-Workshop/5.4-Lambda-deployment/add-route.png)
+In the left navigation pane, select:
 
-6. Click Save changes
+```
+Tables
+```
+
+Then select:
+
+```
+Create table
+```
+
+to create a new DynamoDB table.
+
+![dynamodb-console](/images/5-Workshop/5.5-DynamoDB/dynamodb-console.png)
+
+---
+
+### 3. Configure the Table
+
+On the:
+
+```
+Create table
+```
+
+page, configure the following:
+
+#### Table name
+
+Enter:
+
+```
+ImageMetadata
+```
+
+This table stores metadata for processed images in the system.
+
+---
+
+#### Partition Key
+
+Set:
+
+```
+batchId
+```
+
+Data type:
+
+```
+String
+```
+
+The `batchId` is used to group images uploaded in the same batch.
+
+Example:
+
+```
+batchId:
+8f7c9e12-xxxx-xxxx
+```
+
+A single batch can contain multiple images.
+
+---
+
+#### Sort Key
+
+Enable:
+
+```
+Add sort key
+```
+
+Enter:
+
+```
+processingId
+```
+
+Data type:
+
+```
+String
+```
+
+The `processingId` uniquely identifies each image within the same batch.
+
+Example:
+
+```
+batchId:
+batch-001
+
+processingId:
+image-001
+```
+
+Key structure:
+
+```
+ImageMetadata
+
+Partition Key:
+batchId
+
+Sort Key:
+processingId
+```
+
+![table-key](/images/5-Workshop/5.5-DynamoDB/table-key.png)
+
+---
+
+### 4. Create the DynamoDB Table
+
+After completing the configuration, click:
+
+```
+Create table
+```
+
+AWS creates the table.
+
+![create-table](/images/5-Workshop/5.5-DynamoDB/create-table.png)
+
+---
+
+### 5. Verify the Data Structure
+
+Select:
+
+```
+ImageMetadata
+```
+
+Then open:
+
+```
+Explore table items
+```
+
+Example item:
+
+```json
+{
+  "batchId": "batch-001",
+  "processingId": "processing-001",
+  "userId": "user-001",
+  "originalName": "image.jpg",
+  "status": "SUCCESS",
+  "format": "WEBP",
+  "originalSize": 2048000,
+  "processedSize": 512000
+}
+```
+
+In this table:
+
+```
+userId
+```
+
+is used to associate image data with the:
+
+```
+UserMetadata
+```
+
+table.
+
+---
+
+### 6. UserMetadata Table
+
+In addition to ImageMetadata, the system also uses the:
+
+```
+UserMetadata
+```
+
+table.
+
+This table stores user information for:
+
+- User account management.
+- Access control.
+- Linking users to their uploaded images.
+
+Key structure:
+
+```
+UserMetadata
+
+Partition Key:
+
+userId
+```
+
+Example:
+
+```json
+{
+  "userId": "user-001",
+  "email": "user@gmail.com",
+  "role": "USER",
+  "createdAt": "2026-08-04T10:00:00Z"
+}
+```
+
+Relationship between the two tables:
+
+```
+UserMetadata
+
+userId
+   |
+   |
+   v
+
+ImageMetadata
+
+userId
+```
+
+---
+
+### 7. Result
+
+At this stage, the system has all the required DynamoDB tables:
+
+```
+DynamoDB
+
+|
+|-- UserMetadata
+|
+|-- ImageMetadata
+```
+
+ImageMetadata table information:
+
+```
+Table:
+
+ImageMetadata
 
 
+Primary Key:
 
+batchId
+
+
+Sort Key:
+
+processingId
+
+
+Capacity Mode:
+
+On-demand
+
+
+Encryption:
+
+Enabled
+```
+
+Metadata processing workflow:
+
+```
+User
+ |
+ |
+Upload Image
+ |
+ v
+Amazon S3
+ |
+ |
+AWS Lambda
+ |
+ |
+Process Image
+ |
+ |
+ v
+
+ImageMetadata
+```
+
+DynamoDB is now ready to store user information and metadata generated during the image optimization process.
+
+The next step is to verify the metadata written by AWS Lambda to DynamoDB in [5.5.2. Verify Metadata in DynamoDB](5.5.2-verify-metadata/).

@@ -6,13 +6,15 @@ chapter : false
 pre : " <b> 5.3. </b> "
 ---
 
-#### Using Gateway endpoint
+#### Configuring Amazon S3
 
-In this section, you will create **a Gateway eendpoint** to access **Amazon S3** from **an EC2 instance**. **The Gateway endpoint** will allow upload an object to S3 buckets without using **the Public Internet**. To create an endpoint, you must specify the VPC in which you want to create the endpoint, and the service (in this case, S3) to which you want to establish the connection.
+In this section, the team configures **Amazon** S3 to store the images used by the system. Two S3 Buckets are used: the **Input Bucket** and the **Output Bucket**.
 
-![overview](/images/5-Workshop/5.3-S3-setup/diagram2.png)
+- The **Input Bucket** is used to store images uploaded by users. When a new image is uploaded, Amazon S3 generates an **ObjectCreated** event to trigger AWS Lambda and initiate the image processing workflow.
+- The **Output Bucket** is used to store the optimized images and the thumbnails generated during the processing workflow.
 
-#### Content
+Using Amazon S3 enables the system to store data with high durability, flexible scalability, and seamless integration with other AWS services.
+#### Contents
 
-- [Create gateway endpoint](3.1-create-gwe/)
-- [Test gateway endpoint](3.2-test-gwe/)
+- [Create S3 Buckets for Image Storage](5.3.1-create-buckets/)
+- [Configure an S3 Trigger for AWS Lambda](5.3.2-configure-trigger/)
