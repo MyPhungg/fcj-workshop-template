@@ -1,44 +1,43 @@
 ---
-title: "Events Participated"
-date: 2024-01-01
+title: "Attended Events"
+date: 2026-08-04
 weight: 4
 chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** for your report, including this warning.
-{{% /notice %}}
-
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
-
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
-
-### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
-
-&emsp;**Date & Time:** 09:00, August 13, 2025  
-
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
-
-&emsp;**Role:** Attendee  
-
 ---
 
-### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+> In this section, participants need to list and provide detailed descriptions of the events they have attended during their internship or working process.
+>
+> Each event should be presented in the format Event 1, Event 2, Event 3, etc., including the following information:
+>
+> - Event name
+> - Event date
+> - Location (if available)
+> - Your role in the event (participant, organizer support, speaker, etc.)
+> - Brief description of the main content and activities of the event
+> - Results or values gained (lessons learned, new skills, contributions to the team/project)
+> - This list helps clearly demonstrate your actual participation, as well as the soft skills and experiences accumulated through each event.
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+During my internship, I participated in 2 events. Each event was a memorable experience that provided new, interesting, and valuable knowledge, along with meaningful gifts and wonderful moments.
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+### [Event 1](4.1-Event1/)
 
-&emsp;**Role:** Attendee  
+ **Event name:** Cloud Architect Event
+
+ **Time:** 09:00 on 20/06/2026
+
+ **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
+
+ **Role in the event:** Competition participant
+
+### [Event 2](4.2-Event2/)
+
+ **Event name:** FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!
+
+ **Time:** 09:00 on 25/07/2025
+
+ **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
+
+ **Role in the event:** Attendee

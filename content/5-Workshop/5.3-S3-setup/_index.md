@@ -1,9 +1,9 @@
 ---
-title : "Access S3 from VPC"
-date : 2024-01-01
-weight : 3
-chapter : false
-pre : " <b> 5.3. </b> "
+title: "Configure Amazon S3"
+date: 2026-08-04
+weight: 3
+chapter: false
+pre: " <b> 5.3. </b> "
 ---
 
 #### Configuring Amazon S3
@@ -14,6 +14,7 @@ In this section, the team configures **Amazon** S3 to store the images used by t
 - The **Output Bucket** is used to store the optimized images and the thumbnails generated during the processing workflow.
 
 Using Amazon S3 enables the system to store data with high durability, flexible scalability, and seamless integration with other AWS services.
+
 #### Contents
 
 - [Create S3 Buckets for Image Storage](5.3.1-create-buckets/)

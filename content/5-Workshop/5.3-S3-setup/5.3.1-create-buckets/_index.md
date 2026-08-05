@@ -1,9 +1,9 @@
 ---
-title : "Create a gateway endpoint"
-date : 2024-01-01 
-weight : 1
-chapter : false
-pre : " <b> 5.3.1 </b> "
+title: "Create S3 Buckets for Image Storage"
+date: 2026-08-04
+weight: 1
+chapter: false
+pre: " <b> 5.3.1 </b> "
 ---
 
 In the **Automatic Image Optimization System on AWS**, Amazon S3 is used to store images throughout the entire processing workflow.
@@ -195,7 +195,7 @@ The Output Bucket has now been created successfully:
 After completing the setup, the Amazon S3 Bucket list will display:
 
 | Bucket                    | Purpose                                      |
-| ------------------------- | ----------------------------------           |
+| ------------------------- | -------------------------------------------- |
 | auto-images-input-bucket  | Stores the original images uploaded by users |
 | auto-images-output-bucket | Stores the optimized images and thumbnails   |
 
@@ -237,4 +237,3 @@ ImageMetadata
 ```
 
 Using Amazon S3 enables the system to store large volumes of images while integrating with AWS Lambda to build an automated and scalable image processing workflow.
-

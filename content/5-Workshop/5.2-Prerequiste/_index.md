@@ -1,9 +1,9 @@
 ---
-title : "Prerequiste"
-date : 2024-01-01 
-weight : 2 
-chapter : false
-pre : " <b> 5.2. </b> "
+title: "Prerequiste"
+date: 2026-08-04
+weight: 2
+chapter: false
+pre: " <b> 5.2. </b> "
 ---
 
 #### IAM Permissions
@@ -69,6 +69,7 @@ The table includes:
 - Sort Key: `processingId`
 
 In addition, the table stores the following information:
+
 - userId
 - originalName
 - status

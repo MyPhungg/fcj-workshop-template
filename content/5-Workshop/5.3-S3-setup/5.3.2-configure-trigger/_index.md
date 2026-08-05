@@ -1,9 +1,9 @@
 ---
-title : "Test the Gateway Endpoint"
-date : 2024-01-01 
-weight : 2
-chapter : false
-pre : " <b> 5.3.2 </b> "
+title: "Configure S3 Trigger for AWS Lambda"
+date: 2026-08-04
+weight: 2
+chapter: false
+pre: " <b> 5.3.2 </b> "
 ---
 
 #### In the **Automatic Image Optimization System on AWS**, AWS Lambda is used to automatically process images after users upload them to the system.
@@ -127,7 +127,6 @@ Lambda
 
 The policy will include the following permission:
 
-
 ```
 s3.amazonaws.com
     lambda:InvokeFunction
@@ -195,4 +194,3 @@ ImageMetadata
 ```
 
 Therefore, the S3 Trigger enables the system to automatically invoke AWS Lambda immediately after users complete the image upload process, ensuring that the image optimization workflow is fully automated and requires no manual intervention.
-

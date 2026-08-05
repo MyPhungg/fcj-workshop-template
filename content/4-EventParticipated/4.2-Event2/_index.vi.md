@@ -1,5 +1,5 @@
 ---
-title: "Event 2"
+title: "FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!"
 date: 2026-08-04
 weight: 2
 chapter: false
