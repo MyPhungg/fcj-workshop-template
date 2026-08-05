@@ -110,7 +110,7 @@ Nội dung công việc trong từng tuần như sau:
   - IAM Role
   - KMS Encryption
 
-**Tuần 8:** [Hoàn thiện hệ thống và chuẩn bị báo cáo](1.8-week8/)
+**Tuần 8:** [Hoàn thiện hệ thống và chuẩn bị báo cáo](1.8-Week8/)
 
 - Kiểm tra lại toàn bộ hệ thống Automatic Image Optimization System on AWS.
 - Kiểm thử quy trình:

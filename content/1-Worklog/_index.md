@@ -110,7 +110,7 @@ The breakdown of weekly tasks is as follows:
   - IAM Role
   - KMS Encryption
 
-**Week 8:** [Complete System and Prepare Final Report](1.8-week8/)
+**Week 8:** [Complete System and Prepare Final Report](1.8-Week8/)
 
 - Conduct full system review for the Automatic Image Optimization System on AWS.
 - Test complete workflow:
