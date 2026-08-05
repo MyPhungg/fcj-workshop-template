@@ -41,7 +41,7 @@ Logs
     +--> Log groups
 ```
 
-![cloudwatch-console](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/cloudwatch-console.png)
+![cloudwatch-console](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/aws_console.jpg)
 
 ---
 
@@ -198,7 +198,7 @@ Saving metadata to DynamoDB
 END RequestId
 ```
 
-![Log](./images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_success.jpg)
+![Log](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_success.jpg)
 Điều này xác nhận:
 
 - S3 Trigger gọi Lambda thành công.

@@ -360,7 +360,7 @@ ERROR
 Image processing failed
 ```
 
-![CloudWatch](static/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
 
 ---
 
@@ -406,7 +406,7 @@ Status:
 FAILED
 ```
 
-![SNS](static/images/5-Workshop/5.6-Monitoring/sns_email.jpg)
+![SNS](/images/5-Workshop/5.6-Monitoring/sns-email.jpg)
 
 The result shows that the system can automatically detect Lambda Function errors and successfully send notifications through Amazon SNS.
 

@@ -355,7 +355,7 @@ ERROR
 Image processing failed
 ```
 
-![CloudWatch](static/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
 
 ---
 
@@ -401,7 +401,7 @@ Status:
 FAILED
 ```
 
-![SNS](static/images/5-Workshop/5.6-Monitoring/sns_email.jpg)
+![SNS](/images/5-Workshop/5.6-Monitoring/sns-email.jpg)
 
 Kết quả cho thấy hệ thống đã tự động phát hiện lỗi của Lambda Function và gửi thông báo thành công thông qua Amazon SNS.
 
