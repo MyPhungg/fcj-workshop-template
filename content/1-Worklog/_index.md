@@ -1,39 +1,122 @@
 ---
-title: "Worklog"
-date: 2024-01-01
+title: "Worklog Overview"
+date: 2026-08-04
 weight: 1
 chapter: false
 pre: " <b> 1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
+During the internship program, I completed my assignments over an **8-week** period from **June 22, 2026 to August 15, 2026**.
 
-**On this page**, you will need to introduce your worklog. **How** did you complete it? How many weeks did you take to complete the program? **What** did you do in those weeks?
+During this time, the completed tasks included exploring the AWS platform, studying necessary Cloud services, practicing basic AWS service deployments, and applying them to build the **Automatic Image Optimization System on AWS**.
 
-Typically, and as a standard, a worklog is carried out over about 3 months (throughout the internship period) with weekly contents as follows:
+The implementation process was divided into the following phases:
 
-**Week 1:** [Getting familiar with AWS and basic AWS services](1.1-week1/)
+- **Phase 1:** Learn foundational AWS knowledge, get acquainted with AWS Console, AWS CLI, and core services.
+- **Phase 2:** Research system architecture for automated image processing and deploy necessary AWS components.
+- **Phase 3:** Build image processing logic using AWS Lambda, storage via Amazon S3, and metadata management via DynamoDB.
+- **Phase 4:** Finalize monitoring, security, system testing, and prepare report documentation.
 
-**Week 2:** [Doing task A...](1.2-week2/)
+The breakdown of weekly tasks is as follows:
 
-**Week 3:** [Doing task B...](1.3-week3/)
+**Week 1:** [Learn AWS Cloud and Fundamental AWS Services](1.1-week1/)
 
-**Week 4:** [Doing task C...](1.4-week4/)
+- Get familiar with the AWS Cloud platform.
+- Explore primary service categories:
+  - Compute
+  - Storage
+  - Database
+  - Networking
+- Create an AWS Free Tier Account.
+- Configure AWS CLI and practice AWS command line operations.
 
-**Week 5:** [Doing task D...](1.5-week5/)
+**Week 2:** [Research AWS Services for the Image Processing System](1.2-week2/)
 
-**Week 6:** [Doing task E...](1.6-week6/)
+- Learn Amazon S3:
+  - Bucket
+  - Object
+  - Permission
+  - Storage management
+- Learn AWS Lambda:
+  - Serverless computing
+  - Function
+  - Trigger
+- Learn DynamoDB:
+  - Table
+  - Partition Key
+  - Sort Key
+- Research integration patterns for S3, Lambda, and DynamoDB.
 
-**Week 7:** [Doing task G...](1.7-week7/)
+**Week 3:** [Design Architecture for Automatic Image Optimization System](1.3-week3/)
 
-**Week 8:** [Doing task H...](1.8-week8/)
+- Analyze system requirements.
+- Design automated image processing architecture.
+- Define the roles of AWS services:
+  - Amazon S3
+  - AWS Lambda
+  - Amazon DynamoDB
+  - Amazon CloudWatch
+  - Amazon SNS
+  - IAM
+  - AWS KMS
+- Design upload, processing, and image storage workflows.
 
-**Week 9:** [Doing task I...](1.9-week9/)
+**Week 4:** [Deploy Amazon S3 and AWS Lambda for Image Processing](1.4-week4/)
 
-**Week 10:** [Doing task L...](1.10-week10/)
+- Create and configure S3 Buckets for image storage.
+- Configure S3 Event Triggers for Lambda.
+- Deploy Lambda Function for image processing.
+- Research using Python Pillow to:
+  - Resize images
+  - Compress images
+  - Convert image formats
+- Test automated upload and image processing workflow.
 
-**Week 11:** [Doing task M...](1.11-week11/)
+**Week 5:** [Build Metadata Storage Functionality using DynamoDB](1.5-week5/)
 
-**Week 12:** [Doing task N...](1.12-week12/)
+- Design DynamoDB Table for metadata storage.
+- Build storage schema:
+  - Batch ID
+  - Processing ID
+  - File information
+  - Processing status
+  - Processing time
+  - Compression ratio
+- Connect Lambda to DynamoDB.
+- Verify metadata records after image processing.
+
+**Week 6:** [Finalize Image Optimization Functionality](1.6-week6/)
+
+- Finalize image processing logic using Python Pillow.
+- Add thumbnail generation functionality.
+- Support multi-format processing:
+  - JPEG
+  - PNG
+  - WEBP
+- Calculate key metrics:
+  - Original size
+  - Processed size
+  - Compression ratio
+  - Processing time
+- Test end-to-end image processing workflow.
+
+**Week 7:** [Deploy System Monitoring and Security](1.7-week7/)
+
+- Monitor Lambda execution logs via Amazon CloudWatch.
+- Verify system processing status.
+- Configure SNS to send notifications upon error occurrence.
+- Audit IAM Permissions.
+- Research security mechanisms:
+  - IAM Role
+  - KMS Encryption
+
+**Week 8:** [Complete System and Prepare Final Report](1.8-week8/)
+
+- Conduct full system review for the Automatic Image Optimization System on AWS.
+- Test complete workflow:
+  - Upload image
+  - Lambda processing
+  - Save output image
+  - Save metadata
+- Finalize deployment documentation.
+- Prepare demo materials and present final results.

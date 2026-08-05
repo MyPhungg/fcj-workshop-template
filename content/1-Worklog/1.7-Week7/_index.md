@@ -1,57 +1,48 @@
 ---
 title: "Week 7 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-08-03
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 7 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+- Deploy monitoring and health check features for the **Automatic Image Optimization System on AWS**.
+- Research how to use Amazon CloudWatch to monitor AWS Lambda.
+- Verify access permissions and security configurations for AWS resources within the system.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+### Tasks to be implemented this week:
 
+| Day | Tasks                                                                                                                                                                                           | Start Date | End Date   | Documentation Source                      |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | ---------- | ----------------------------------------- |
+| Mon | - Research Amazon CloudWatch for system monitoring <br> - Check Lambda logs: <br>&emsp; + Execution log <br>&emsp; + Error log <br>&emsp; + Runtime information                                 | 03/08/2026 | 03/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Tue | - Monitor AWS Lambda operations after image processing <br> - Verify key metrics: <br>&emsp; + Lambda invocation <br>&emsp; + Execution time <br>&emsp; + Error message                         | 04/08/2026 | 04/08/2026 | -                                         |
+| Wed | - Research Amazon SNS for system notifications <br> - Learn how to integrate SNS with other AWS services when events or errors occur                                                            | 05/08/2026 | 05/08/2026 | <https://cloudjourney.awsstudygroup.com/> |
+| Thu | - Verify and update IAM permissions for the system <br> - Check access permissions between components: <br>&emsp; + Lambda → S3 <br>&emsp; + Lambda → DynamoDB <br>&emsp; + User → AWS Resource | 06/08/2026 | 06/08/2026 | -                                         |
+| Fri | - Check system security configurations <br> - Research AWS KMS for data protection <br> - Re-test the entire workflow after completing monitoring and security setups                           | 07/08/2026 | 08/08/2026 | -                                         |
 
-### Week 7 Achievements:
+### Results achieved in Week 7:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+- Understood the role of Amazon CloudWatch in monitoring AWS systems.
 
-* Successfully created and configured an AWS Free Tier account.
+- Acquired the ability to inspect and analyze Lambda logs:
+  - Track Lambda trigger execution process.
+  - Inspect execution details.
+  - Detect and analyze errors during processing.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+- Verified system operational status through key metrics:
+  - Lambda invocation.
+  - Execution time.
+  - Error message.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+- Researched how to use Amazon SNS to support sending notifications when system events or errors occur.
 
-* Used AWS CLI to perform basic operations such as:
+- Verified and adjusted IAM access permissions for system components:
+  - AWS Lambda has permissions to read and write data on Amazon S3.
+  - AWS Lambda has permissions to store metadata in Amazon DynamoDB.
+  - Ensured AWS resources are accessed according to their intended usage.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+- Learned data security mechanisms using AWS KMS.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+- Completed monitoring and security checks, enabling better operational tracking, error detection, and resource access management for the system.

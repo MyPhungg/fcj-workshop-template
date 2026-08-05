@@ -1,57 +1,59 @@
 ---
-title: "Week 7 Worklog"
-date: 2024-01-01
-weight: 1
+title: "Week 8 Worklog"
+date: 2026-08-10
+weight: 8
 chapter: false
-pre: " <b> 1.7. </b> "
+pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
+### Week 8 Objectives:
 
-### Week 7 Objectives:
+- Complete the **Automatic Image Optimization System on AWS**.
+- Re-verify the entire end-to-end system workflow post-deployment.
+- Consolidate documentation, project results, and prepare presentation materials.
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+### Tasks to be implemented this week:
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Tasks                                                                                                                                                                                                                                      | Start Date | End Date   | Documentation Source |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | ---------- | -------------------- |
+| Mon | - Review overall system architecture <br> - Inspect deployed AWS components: <br>&emsp; + Amazon S3 <br>&emsp; + AWS Lambda <br>&emsp; + Amazon DynamoDB <br>&emsp; + Amazon CloudWatch                                                    | 10/08/2026 | 10/08/2026 | -                    |
+| Tue | - Test end-to-end image processing workflow: <br>&emsp; + Upload image to system <br>&emsp; + S3 receives file <br>&emsp; + Lambda executes processing <br>&emsp; + Save output image and thumbnail <br>&emsp; + Save metadata to DynamoDB | 11/08/2026 | 11/08/2026 | -                    |
+| Wed | - Inspect and evaluate image processing results <br> - Verify metadata records: <br>&emsp; + File information <br>&emsp; + Processing status <br>&emsp; + Compression ratio <br>&emsp; + Processing time                                   | 12/08/2026 | 12/08/2026 | -                    |
+| Thu | - Finalize system deployment documentation <br> - Consolidate AWS Service configuration steps <br> - Add illustrative diagrams and execution results                                                                                       | 13/08/2026 | 13/08/2026 | -                    |
+| Fri | - Prepare presentation slides and system demonstration <br> - Summarize achievements and results throughout project implementation                                                                                                         | 14/08/2026 | 15/08/2026 | -                    |
 
+### Results achieved in Week 8:
 
-### Week 7 Achievements:
+- Completed the **Automatic Image Optimization System on AWS** featuring core components:
+  - Amazon S3:
+    - Input image storage.
+    - Optimized output image storage.
+    - Thumbnail storage.
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+  - AWS Lambda:
+    - Automated image processing upon file uploads.
+    - Resizing, compression, and thumbnail generation.
 
-* Successfully created and configured an AWS Free Tier account.
+  - Amazon DynamoDB:
+    - Processing metadata storage.
+    - Image processing status tracking.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+  - Amazon CloudWatch:
+    - Lambda logging and activity monitoring.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+- Successfully tested the end-to-end workflow:
+  - User uploads an image.
+  - Image is stored on Amazon S3.
+  - Lambda is triggered automatically.
+  - Image is optimized and saved to the output destination.
+  - Metadata is recorded in DynamoDB.
 
-* Used AWS CLI to perform basic operations such as:
+- Verified and evaluated post-processing metrics:
+  - Image size before and after optimization.
+  - Size reduction ratio.
+  - Processing time.
+  - Processing status.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+- Finalized deployment architecture and configuration documentation.
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+- Prepared presentation content, demo scenarios, and project summary for the **Automatic Image Optimization System on AWS**.

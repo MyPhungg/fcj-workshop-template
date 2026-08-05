@@ -1,59 +1,60 @@
 ---
 title: "Worklog Tuần 5"
-date: 2024-01-01
+date: 2026-07-20
 weight: 5
 chapter: false
 pre: " <b> 1.5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 5:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Xây dựng chức năng lưu trữ metadata cho hệ thống **Automatic Image Optimization System on AWS**.
+- Kết nối AWS Lambda với Amazon DynamoDB để lưu thông tin quá trình xử lý ảnh.
+- Theo dõi trạng thái xử lý và các thông tin liên quan đến file ảnh.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
+| Thứ | Công việc                                                                                                                                                                                                                      | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Nghiên cứu Amazon DynamoDB phục vụ việc lưu trữ metadata <br> - Xác định thông tin cần lưu trữ: <br>&emsp; + Thông tin file ảnh <br>&emsp; + Trạng thái xử lý <br>&emsp; + Thời gian xử lý <br>&emsp; + Thông tin dung lượng | 20/07/2026   | 20/07/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Tạo DynamoDB Table lưu trữ Image Metadata <br> - Thiết kế cấu trúc dữ liệu: <br>&emsp; + Partition Key <br>&emsp; + Sort Key <br>&emsp; + Các thuộc tính metadata khác                                                       | 21/07/2026   | 21/07/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 4   | - Cập nhật AWS Lambda Function để kết nối DynamoDB <br> - Cấu hình quyền IAM cho phép Lambda truy cập DynamoDB <br> - Thực hiện ghi dữ liệu metadata sau khi xử lý ảnh hoàn tất                                                | 22/07/2026   | 22/07/2026      | -                                         |
+| 5   | - Xây dựng cơ chế cập nhật trạng thái xử lý ảnh: <br>&emsp; + PROCESSING <br>&emsp; + SUCCESS <br>&emsp; + FAILED <br> - Lưu thông tin lỗi khi quá trình xử lý thất bại                                                        | 23/07/2026   | 23/07/2026      | -                                         |
+| 6   | - Kiểm tra dữ liệu metadata trên DynamoDB <br> - Kiểm thử luồng xử lý hoàn chỉnh: <br>&emsp; + Upload ảnh <br>&emsp; + Lambda xử lý <br>&emsp; + Lưu ảnh output <br>&emsp; + Lưu metadata                                      | 24/07/2026   | 25/07/2026      | -                                         |
 
 ### Kết quả đạt được tuần 5:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+- Tạo thành công DynamoDB Table phục vụ việc lưu trữ metadata của ảnh.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+- Xây dựng được cấu trúc dữ liệu metadata bao gồm:
+  - Thông tin định danh:
+    - Batch ID.
+    - Processing ID.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+  - Thông tin file:
+    - Original name.
+    - Input bucket.
+    - Output bucket.
+    - Input key.
+    - Output key.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+  - Thông tin xử lý:
+    - Processing status.
+    - Processing time.
+    - Error message.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+  - Thông tin dung lượng:
+    - Original size.
+    - Processed size.
+    - Compression ratio.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+- Kết nối thành công AWS Lambda với DynamoDB để lưu dữ liệu sau quá trình xử lý ảnh.
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+- Xây dựng cơ chế cập nhật trạng thái xử lý:
+  - **PROCESSING:** Lambda đang thực hiện xử lý ảnh.
+  - **SUCCESS:** Quá trình xử lý hoàn tất.
+  - **FAILED:** Xảy ra lỗi trong quá trình xử lý.
 
+- Kiểm tra dữ liệu được ghi nhận trên DynamoDB sau khi Lambda hoàn thành xử lý.
 
+- Hoàn thiện chức năng quản lý metadata, giúp hệ thống có khả năng theo dõi thông tin và trạng thái của từng ảnh trong quá trình xử lý.

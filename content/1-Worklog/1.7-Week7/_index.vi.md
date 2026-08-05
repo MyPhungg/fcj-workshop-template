@@ -1,59 +1,48 @@
 ---
 title: "Worklog Tuần 7"
-date: 2024-01-01
+date: 2026-08-03
 weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 
 ### Mục tiêu tuần 7:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+- Triển khai các chức năng theo dõi và kiểm tra hoạt động của hệ thống **Automatic Image Optimization System on AWS**.
+- Nghiên cứu cách sử dụng Amazon CloudWatch để giám sát AWS Lambda.
+- Kiểm tra quyền truy cập và các cấu hình bảo mật cho các tài nguyên AWS trong hệ thống.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
 
+| Thứ | Công việc                                                                                                                                                                                       | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
+| 2   | - Tìm hiểu Amazon CloudWatch phục vụ monitoring hệ thống <br> - Kiểm tra Lambda Logs: <br>&emsp; + Execution log <br>&emsp; + Error log <br>&emsp; + Runtime information                        | 03/08/2026   | 03/08/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 3   | - Theo dõi hoạt động của AWS Lambda sau khi xử lý ảnh <br> - Kiểm tra các thông tin: <br>&emsp; + Lambda invocation <br>&emsp; + Execution time <br>&emsp; + Error message                      | 04/08/2026   | 04/08/2026      | -                                         |
+| 4   | - Nghiên cứu Amazon SNS phục vụ thông báo hệ thống <br> - Tìm hiểu cách kết hợp SNS với các dịch vụ AWS khác khi xảy ra sự kiện hoặc lỗi                                                        | 05/08/2026   | 05/08/2026      | <https://cloudjourney.awsstudygroup.com/> |
+| 5   | - Kiểm tra và cập nhật IAM Permission cho hệ thống <br> - Kiểm tra quyền truy cập giữa các thành phần: <br>&emsp; + Lambda → S3 <br>&emsp; + Lambda → DynamoDB <br>&emsp; + User → AWS Resource | 06/08/2026   | 06/08/2026      | -                                         |
+| 6   | - Kiểm tra các cấu hình bảo mật hệ thống <br> - Nghiên cứu AWS KMS trong việc bảo vệ dữ liệu <br> - Kiểm thử lại toàn bộ luồng xử lý sau khi hoàn thiện monitoring và security                  | 07/08/2026   | 08/08/2026      | -                                         |
 
 ### Kết quả đạt được tuần 7:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+- Hiểu được vai trò của Amazon CloudWatch trong việc giám sát hệ thống AWS.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+- Có khả năng kiểm tra và phân tích Lambda Logs:
+  - Theo dõi quá trình Lambda được kích hoạt.
+  - Kiểm tra thông tin thực thi.
+  - Phát hiện và phân tích lỗi trong quá trình xử lý.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+- Kiểm tra được trạng thái hoạt động của hệ thống thông qua các thông tin:
+  - Lambda invocation.
+  - Execution time.
+  - Error message.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+- Nghiên cứu cách sử dụng Amazon SNS để hỗ trợ gửi thông báo khi hệ thống phát sinh sự kiện hoặc lỗi.
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+- Kiểm tra và điều chỉnh quyền truy cập IAM cho các thành phần trong hệ thống:
+  - AWS Lambda có quyền đọc và ghi dữ liệu trên Amazon S3.
+  - AWS Lambda có quyền lưu metadata vào Amazon DynamoDB.
+  - Đảm bảo các tài nguyên AWS được truy cập đúng theo mục đích.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+- Tìm hiểu cơ chế bảo mật dữ liệu bằng AWS KMS.
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+- Hoàn thiện việc kiểm tra monitoring và security, giúp hệ thống có khả năng theo dõi hoạt động, phát hiện lỗi và quản lý quyền truy cập tài nguyên tốt hơn.
