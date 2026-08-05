@@ -6,90 +6,193 @@ chapter : false
 pre : " <b> 5.3.2 </b> "
 ---
 
-#### Create S3 bucket
+#### In the **Automatic Image Optimization System on AWS**, AWS Lambda is used to automatically process images after users upload them to the system.
 
-1. Navigate to **S3 management console**
-2. In the Bucket console, choose **Create bucket**
+To invoke Lambda automatically, the system uses **Amazon S3 Event Notification**. Whenever a new image is uploaded to the Input Bucket, Amazon S3 sends an event to AWS Lambda to initiate the image optimization workflow.
 
-![Create bucket](/images/5-Workshop/5.3-S3-setup/create-bucket.png)
+Processing Workflow:
 
-3. In **the Create bucket console**
-+ **Name the bucket**: choose a name that hasn't been given to any bucket globally (hint: lab number and your name)
+1. The user uploads an image to the **Input Bucket**.
+2. Amazon S3 generates an **Object Created** event.
+3. The S3 Trigger invokes AWS Lambda.
+4. AWS Lambda performs the following tasks:
+   - Reads the image from the Input Bucket.
+   - Optimizes the image size and file size.
+   - Converts the image format according to the configured settings.
+   - Generates a thumbnail.
+   - Stores the processed image in the Output Bucket.
+   - Stores the processing information in DynamoDB.
 
-![Bucket name](/images/5-Workshop/5.3-S3-setup/bucket-name.png)
+---
 
-+ Leave other fields as they are (default)
-+ Scroll down and choose **Create bucket**
+### 1. Open the AWS Lambda Console
 
-![Create](/images/5-Workshop/5.3-S3-setup/create-button.png) 
+Access [AWS Lambda Console](https://console.aws.amazon.com/lambda/)
 
-+ Successfully create S3 bucket.
+From the list of Lambda functions, select the image processing function:
 
-![Success](/images/5-Workshop/5.3-S3-setup/bucket-success.png)
+![lambda-function](/images/5-Workshop/5.3-S3-setup/lambda-function.png)
 
-#### Connect to EC2 with session manager
+---
 
-+ For this workshop, you will use **AWS Session Manager** to access several **EC2 instances**. **Session Manager** is a fully managed **AWS Systems Manager** capability that allows you to manage your **Amazon EC2 instances**  and on-premises virtual machines (VMs) through an interactive one-click browser-based shell. Session Manager provides secure and auditable instance management without the need to open inbound ports, maintain bastion hosts, or manage SSH keys.
+### 2. Add a Trigger to the Lambda Function
 
-+ First Cloud AI Journey [Lab](https://000058.awsstudygroup.com/1-introduce/) for indepth understanding of Session manager.
+In the Lambda interface, select Function overview, then click Add trigger.
 
-1. In the **AWS Management Console**, start typing ```Systems Manager``` in the quick search box and press **Enter**:
+![add-trigger](/images/5-Workshop/5.3-S3-setup/add-trigger.png)
 
-![system manager](/images/5-Workshop/5.3-S3-setup/sm.png)
+---
 
-2. From the **Systems Manager** menu, find **Node Management** in the left menu and click **Session Manager**:
+### 3. Select Amazon S3 as the Trigger
 
-![system manager](/images/5-Workshop/5.3-S3-setup/sm1.png)
+In the **Trigger configuration**, select Amazon S3 as the trigger source:
 
-3. Click **Start Session**, and select **the EC2 instance** named **Test-Gateway-Endpoint**. 
-{{% notice info %}}
-This EC2 instance is already running in "VPC Cloud" and will be used to test connectivity to Amazon S3 through the Gateway endpoint you just created (s3-gwe). {{% /notice %}}
+![select-s3-trigger](/images/5-Workshop/5.3-S3-setup/select-s3-trigger.png)
 
-![Start session](/images/5-Workshop/5.3-S3-setup/start-session.png)
+---
 
-**Session Manager** will open a new browser tab with a shell prompt: sh-4.2 $
+### 4. Configure the S3 Trigger
 
-![Success](/images/5-Workshop/5.3-S3-setup/start-session-success.png)
+In the **Bucket** field, select the Input Bucket created in the previous step:
 
-You have successfully start a session - connect to the EC2 instance in VPC cloud. In the next step, we will create a S3 bucket and a file in it. 
+```
+auto-images-input-bucket
+```
 
-#### Create a file and upload to s3 bucket
+In the **Event type** field, select:
 
-1. Change to the ssm-user's home directory by typing ```cd ~``` in the CLI
+```
+All object create events
+```
 
-![Change user's dir](/images/5-Workshop/5.3-S3-setup/cli1.png)
+This event is triggered whenever a new object is created in the bucket.
 
-2. Create a new file to use for testing with the command ```fallocate -l 1G testfile.xyz```, which will create a file of 1GB size named "testfile.xyz".
+![s3-trigger-config](/images/5-Workshop/5.3-S3-setup/s3-trigger-config.png)
 
-![Create file](/images/5-Workshop/5.3-S3-setup/cli-file.png)
+---
 
-3. Upload file to S3 bucket with command ```aws s3 cp testfile.xyz s3://your-bucket-name```. Replace your-bucket-name with the name of S3 bucket that you created earlier.
+### 5. Configure File Filters
 
-![Uploaded](/images/5-Workshop/5.3-S3-setup/uploaded.png)
+To limit the files processed by AWS Lambda, you can configure filters based on the file path or file format.
 
-You have successfully uploaded the file to your S3 bucket. You can now terminate the session.
+Example:
 
-#### Check object in S3 bucket
+#### Prefix
 
-1. Navigate to S3 console.  
-2. Click the name of your s3 bucket
-3. In the Bucket console, you will see the file you have uploaded to your S3 bucket
+```
+uploads/
+```
 
-![Check S3](/images/5-Workshop/5.3-S3-setup/check-s3-bucket.png)
+Only files located in the `uploads` folder will be processed.
 
-#### Section summary
+Example:
 
-Congratulation on completing access to S3 from VPC. In this section, you created a Gateway endpoint for Amazon S3, and used the AWS CLI to upload an object. The upload worked because the Gateway endpoint allowed communication to S3, without needing an Internet Gateway attached to "VPC Cloud". This demonstrates the functionality of the Gateway endpoint as a secure path to S3 without traversing the Public Internet.
+```
+uploads/user001/image01.jpg
+```
+
+#### Suffix
+
+```
+.jpg
+```
+
+The filter can also be applied to other supported image formats:
+
+```
+.jpg
+.jpeg
+.png
+.webp
+```
+
+{{% notice note %}}
+In addition to using S3 Trigger filters, AWS Lambda also validates the image format and file size before processing to ensure that the input data is valid.
+{{% /notice %}}
+
+---
+
+### 6. Grant Permission for Amazon S3 to Invoke AWS Lambda
+
+When an S3 Trigger is created, AWS automatically creates the required permission allowing Amazon S3 to invoke the Lambda function.
+
+Verify it at:
+
+```
+Lambda
+ → Configuration
+ → Permissions
+ → Resource-based policy statements
+```
+
+The policy will include the following permission:
 
 
+```
+s3.amazonaws.com
+    lambda:InvokeFunction
+```
 
+![lambda-permission](/images/5-Workshop/5.3-S3-setup/lambda-permission.png)
 
+---
 
+### 7. Verify That the Trigger Has Been Created
 
+After the configuration is completed successfully, the connection will be displayed in the **Function overview** section of the Lambda function:
 
+![trigger-complete](/images/5-Workshop/5.3-S3-setup/trigger-complete.png)
 
+---
 
+### 8. Verify the Processing Workflow
 
+Upload a test image to the Input Bucket.
 
+Example:
 
+```
+uploads/user001/test-image.jpg
+```
+
+After the upload, the system performs the following steps:
+
+1. Amazon S3 generates an Object Created event.
+2. AWS Lambda is invoked.
+3. AWS Lambda downloads the image from the Input Bucket.
+4. The image is optimized.
+5. The processed image is stored in the Output Bucket.
+6. The processing metadata is stored in DynamoDB.
+
+Data structure after processing:
+
+```
+auto-images-output-bucket
+
+optimized/
+ └── user001/
+      └── batchId/
+            └── test-image.webp
+
+thumbnails/
+ └── user001/
+      └── batchId/
+            └── test-image.webp
+```
+
+The processing information is stored in DynamoDB:
+
+```
+ImageMetadata
+
+├── batchId
+├── processingId
+├── originalName
+├── processedSize
+├── compressionRatio
+├── processingTimeMs
+└── status = SUCCESS
+```
+
+Therefore, the S3 Trigger enables the system to automatically invoke AWS Lambda immediately after users complete the image upload process, ensuring that the image optimization workflow is fully automated and requires no manual intervention.
 
