@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.6 </b> "
 ---
 
-# Monitoring hệ thống với CloudWatch và SNS
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, Monitoring được triển khai nhằm theo dõi hoạt động của hệ thống, kiểm tra quá trình xử lý ảnh và gửi cảnh báo khi xảy ra lỗi.
 
 Hệ thống sử dụng hai dịch vụ AWS chính:
@@ -19,7 +17,7 @@ Việc triển khai Monitoring giúp hệ thống dễ dàng phát hiện sự c
 
 ---
 
-# Tổng quan kiến trúc Monitoring
+### Tổng quan kiến trúc Monitoring
 
 Quy trình giám sát hệ thống:
 
@@ -59,7 +57,7 @@ Administrator
 
 ---
 
-# Amazon CloudWatch Logs
+### Amazon CloudWatch Logs
 
 Amazon CloudWatch Logs được sử dụng để ghi nhận toàn bộ quá trình thực thi của AWS Lambda.
 
@@ -96,7 +94,7 @@ CloudWatch Logs giúp:
 
 ---
 
-# Amazon SNS Notification
+### Amazon SNS Notification
 
 Amazon SNS được sử dụng để gửi thông báo tự động đến quản trị viên khi hệ thống phát sinh lỗi.
 
@@ -141,11 +139,11 @@ FAILED
 
 ---
 
-# Các bước triển khai Monitoring
+### Các bước triển khai Monitoring
 
 Quá trình triển khai Monitoring gồm hai bước:
 
-## 5.6.1. Theo dõi Lambda Logs bằng CloudWatch
+#### 5.6.1. Theo dõi Lambda Logs bằng CloudWatch
 
 Cấu hình CloudWatch Logs để:
 
@@ -160,7 +158,7 @@ Kết quả mong đợi:
 
 ---
 
-## 5.6.2. Cấu hình SNS Notification
+#### 5.6.2. Cấu hình SNS Notification
 
 Thiết lập Amazon SNS để:
 
@@ -175,7 +173,7 @@ Kết quả mong đợi:
 
 ---
 
-# Vai trò của Monitoring trong hệ thống
+### Vai trò của Monitoring trong hệ thống
 
 Việc triển khai CloudWatch và SNS giúp hệ thống:
 

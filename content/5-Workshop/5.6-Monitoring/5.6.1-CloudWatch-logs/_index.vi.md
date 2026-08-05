@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.6.1 </b> "
 ---
 
-# Theo dõi Lambda Logs bằng Amazon CloudWatch
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, Amazon CloudWatch được sử dụng để theo dõi quá trình thực thi của AWS Lambda và lưu trữ các log phát sinh trong quá trình xử lý ảnh.
 
 CloudWatch Logs giúp quản trị viên:
@@ -19,7 +17,7 @@ CloudWatch Logs giúp quản trị viên:
 
 ---
 
-# 1. Truy cập CloudWatch Console
+### 1. Truy cập CloudWatch Console
 
 Mở:
 
@@ -27,12 +25,14 @@ Mở:
 AWS Management Console
 ```
 
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/aws_console.jpg)
 Tìm kiếm dịch vụ:
 
 ```
 CloudWatch
 ```
 
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/aws_search_cw.jpg)
 Trong thanh điều hướng bên trái, chọn:
 
 ```
@@ -45,7 +45,7 @@ Logs
 
 ---
 
-# 2. Kiểm tra Log Group của Lambda
+### 2. Kiểm tra Log Group của Lambda
 
 Khi AWS Lambda được tạo, AWS tự động tạo một Log Group tương ứng trong CloudWatch.
 
@@ -57,11 +57,11 @@ Chọn Log Group:
 
 Log Group này chứa toàn bộ log được sinh ra trong quá trình Lambda thực thi.
 
-![log-group](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log-group.png)
+![log-group](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log.jpg)
 
 ---
 
-# 3. Kiểm tra Log Stream
+### 3. Kiểm tra Log Stream
 
 Trong Log Group:
 
@@ -81,11 +81,11 @@ Ví dụ:
 2026/08/04/[$LATEST]xxxxxxxx
 ```
 
-![log-stream](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log-stream.png)
+![log-stream](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_stream.jpg)
 
 ---
 
-# 4. Kiểm tra Lambda Execution Logs
+### 4. Kiểm tra Lambda Execution Logs
 
 Mở một Log Stream để xem chi tiết quá trình xử lý.
 
@@ -123,11 +123,11 @@ Các thông tin quan trọng:
 | Saving metadata  | Lưu dữ liệu vào DynamoDB  |
 | END              | Lambda hoàn thành         |
 
-![execution-log](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/execution-log.png)
+![execution-log](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_event.jpg)
 
 ---
 
-# 5. Kiểm tra lỗi trong quá trình xử lý
+### 5. Kiểm tra lỗi trong quá trình xử lý
 
 Trong trường hợp Lambda gặp lỗi, CloudWatch sẽ ghi nhận thông tin lỗi.
 
@@ -142,6 +142,7 @@ Exception:
 Unsupported image format
 ```
 
+![Log-Error](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/cw_log_error.jpg)
 Các lỗi có thể phát hiện:
 
 - File ảnh không hợp lệ.
@@ -153,7 +154,7 @@ CloudWatch giúp xác định nguyên nhân để thực hiện xử lý sự c�
 
 ---
 
-# 6. Kiểm tra Lambda Metrics
+### 6. Kiểm tra Lambda Metrics
 
 Ngoài Logs, CloudWatch còn cung cấp các Metrics để theo dõi Lambda.
 
@@ -179,7 +180,7 @@ Các chỉ số này giúp đánh giá hiệu năng và khả năng mở rộng 
 
 ---
 
-# 7. Kiểm tra kết quả Monitoring
+### 7. Kiểm tra kết quả Monitoring
 
 Sau khi upload ảnh và Lambda xử lý thành công:
 
@@ -197,6 +198,7 @@ Saving metadata to DynamoDB
 END RequestId
 ```
 
+![Log](./images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_success.jpg)
 Điều này xác nhận:
 
 - S3 Trigger gọi Lambda thành công.
@@ -206,7 +208,7 @@ END RequestId
 
 ---
 
-# 8. Kết quả
+### 8. Kết quả
 
 Sau bước này, hệ thống đã được cấu hình và kiểm tra Monitoring bằng Amazon CloudWatch.
 

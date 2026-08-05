@@ -1,59 +1,246 @@
 ---
-title : "Test the Interface Endpoint"
-date : 2024-01-01
-weight : 3
-chapter : false
-pre : " <b> 5.4.3 </b> "
+title: "Monitoring Lambda Logs with Amazon CloudWatch"
+date: 2026-08-04
+weight: 1
+chapter: false
+pre: " <b> 5.6.1 </b> "
 ---
 
-#### Get the regional DNS name of S3 interface endpoint
-1. From the Amazon VPC menu, choose Endpoints.
+---
 
-2. Click the name of newly created endpoint: s3-interface-endpoint. Click details and save the regional DNS name of the endpoint (the first one) to your text-editor for later use. 
+In the **Automatic Image Optimization System on AWS**, Amazon CloudWatch is used to monitor the execution process of AWS Lambda and store logs generated during image processing.
 
-![dns name](/images/5-Workshop/5.4-Lambda-deployment/dns.png)
+CloudWatch Logs helps administrators:
 
+- Verify whether Lambda has been triggered successfully.
+- Monitor each step during the image processing process.
+- Detect and analyze errors when issues occur.
+- Evaluate Lambda processing performance.
 
-#### Connect to EC2 instance in "VPC On-prem"
+---
 
-1. Navigate to **Session manager** by typing "session manager" in the search box 
+### 1. Access CloudWatch Console
 
-2. Click **Start Session**, and select the EC2 instance named **Test-Interface-Endpoint**. This EC2 instance is running in "VPC On-prem" and will be used to test connectivty to Amazon S3 through the Interface endpoint we just created. Session Manager will open a new browser tab with a shell prompt: **sh-4.2 $**
-
-![Start session](/images/5-Workshop/5.4-Lambda-deployment/start-session.png)
-
-3. Change to the ssm-user's home directory with command "cd ~"
-
-4. Create a file named testfile2.xyz
-```
-fallocate -l 1G testfile2.xyz
-```
-
-![user](/images/5-Workshop/5.4-Lambda-deployment/cli1.png)
-
-
-5. Copy file to the same S3 bucket we created in section 3.2
+Open:
 
 ```
-aws s3 cp --endpoint-url https://bucket.<Regional-DNS-Name> testfile2.xyz s3://<your-bucket-name>
-``` 
-+ This command requires the --endpoint-url parameter, because you need to use the endpoint-specific DNS name to access S3 using an Interface endpoint.
-+ Do not include the leading ' * ' when copying/pasting the regional DNS name.
-+ Provide your S3 bucket name created earlier
+AWS Management Console
+```
 
-![copy file](/images/5-Workshop/5.4-Lambda-deployment/cli2.png)
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/aws_console.jpg)
 
+Search for the service:
 
-Now the file has been added to your S3 bucket. Let check your S3 bucket in the next step.
+```
+CloudWatch
+```
 
-#### Check Object in S3 bucket
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/aws_search_cw.jpg)
 
-1. Navigate to S3 console
-2. Click Buckets
-3. Click the name of your bucket and you will see testfile2.xyz has been added to your bucket
+In the left navigation panel, select:
 
-![check bucket](/images/5-Workshop/5.4-Lambda-deployment/check-bucket.png)
+```
+Logs
+    |
+    +--> Log groups
+```
 
+![cloudwatch-console](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/cloudwatch-console.png)
 
+---
 
+### 2. Check Lambda Log Group
 
+When an AWS Lambda function is created, AWS automatically creates a corresponding Log Group in CloudWatch.
+
+Select the Log Group:
+
+```
+/aws/lambda/image-optimizer-lambda
+```
+
+This Log Group contains all logs generated during Lambda execution.
+
+![log-group](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log.jpg)
+
+---
+
+### 3. Check Log Stream
+
+Inside the Log Group:
+
+Select:
+
+```
+Log streams
+```
+
+Each time Lambda is invoked, a new Log Stream is created.
+
+The Log Stream contains information about each execution.
+
+Example:
+
+```
+2026/08/04/[$LATEST]xxxxxxxx
+```
+
+![log-stream](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_stream.jpg)
+
+---
+
+### 4. Check Lambda Execution Logs
+
+Open a Log Stream to view details of the processing workflow.
+
+Example log:
+
+```
+START RequestId: xxxx
+
+Received S3 Event
+
+Processing image:
+sample-image.jpg
+
+Downloading image from S3...
+
+Optimizing image...
+
+Generating thumbnail...
+
+Uploading result to S3...
+
+Saving metadata to DynamoDB...
+
+END RequestId: xxxx
+```
+
+Important information:
+
+| Log              | Description                  |
+| ---------------- | ---------------------------- |
+| START            | Lambda execution starts      |
+| RequestId        | ID of the Lambda invocation  |
+| Processing image | Image file being processed   |
+| Uploading result | Upload processed image to S3 |
+| Saving metadata  | Save metadata to DynamoDB    |
+| END              | Lambda execution completed   |
+
+![execution-log](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_event.jpg)
+
+---
+
+### 5. Check Errors During Processing
+
+When Lambda encounters an error, CloudWatch records the error information.
+
+Example:
+
+```
+ERROR
+
+Image processing failed
+
+Exception:
+Unsupported image format
+```
+
+![Log-Error](/images/5-Workshop/5.6-Monitoring/cloudwatch-logs/cw_log_error.jpg)
+
+Errors that can be detected:
+
+- Invalid image files.
+- No permission to access S3.
+- Unable to write data to DynamoDB.
+- Errors during image processing using Pillow.
+
+CloudWatch helps identify the cause of problems for troubleshooting.
+
+---
+
+### 6. Check Lambda Metrics
+
+Besides Logs, CloudWatch also provides Metrics to monitor Lambda.
+
+Important metrics:
+
+```
+Invocations
+Errors
+Duration
+Throttles
+```
+
+Meaning:
+
+| Metric      | Description                        |
+| ----------- | ---------------------------------- |
+| Invocations | Number of times Lambda is invoked  |
+| Errors      | Number of failed Lambda executions |
+| Duration    | Execution time                     |
+| Throttles   | Number of requests being limited   |
+
+These metrics help evaluate system performance and scalability.
+
+---
+
+### 7. Verify Monitoring Results
+
+After uploading an image and Lambda successfully processes it:
+
+CloudWatch displays logs:
+
+```
+START RequestId
+
+Processing image
+
+Image optimization completed
+
+Saving metadata to DynamoDB
+
+END RequestId
+```
+
+![Log](./images/5-Workshop/5.6-Monitoring/cloudwatch-logs/log_success.jpg)
+
+This confirms:
+
+- S3 Trigger successfully invokes Lambda.
+- Lambda performs image processing.
+- Metadata is stored in DynamoDB.
+- The processing workflow is completed successfully.
+
+---
+
+### 8. Result
+
+After this step, the system has been configured and verified for monitoring using Amazon CloudWatch.
+
+Achieved results:
+
+- Lambda automatically creates logs after each execution.
+- The image processing workflow can be monitored.
+- Errors can be detected and analyzed.
+- Monitoring data is available for system supervision.
+
+Monitoring workflow:
+
+```
+Amazon S3
+     |
+     |
+S3 Event Trigger
+     |
+     v
+AWS Lambda
+     |
+     |
+CloudWatch Logs
+     |
+     |
+Administrator
+```
+
+The next step is to configure **Amazon SNS Notification** to send automatic alerts when system errors occur.

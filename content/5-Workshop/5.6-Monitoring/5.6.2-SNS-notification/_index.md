@@ -1,111 +1,451 @@
 ---
-title : "On-premises DNS Simulation"
-date : 2024-01-01
-weight : 4
-chapter : false
-pre : " <b> 5.4.4 </b> "
+title: "Configure SNS Notification for Alerts"
+date: 2026-08-04
+weight: 2
+chapter: false
+pre: " <b> 5.6.2 </b> "
 ---
 
-AWS PrivateLink endpoints have a fixed IP address in each Availability Zone where they are deployed, for the life of the endpoint (until it is deleted). These IP addresses are attached to Elastic Network Interfaces (ENIs). AWS recommends using DNS to resolve the IP addresses for endpoints so that downstream applications use the latest IP addresses when ENIs are added to new AZs, or deleted over time.
+---
 
-In this section, you will create a forwarding rule to send DNS resolution requests from a simulated on-premises environment to a Route 53 Private Hosted Zone. This section leverages the infrastructure deployed by CloudFormation in the Prepare the environment section.
+In the **Automatic Image Optimization System on AWS**, Amazon SNS is used to send alert notifications to administrators when errors occur during the image processing workflow.
 
-#### Create DNS Alias Records for the Interface endpoint
-1. Navigate to the [Route 53 management console](https://us-east-1.console.aws.amazon.com/route53/v2/hostedzones?region=us-east-1#) (Hosted Zones section).  The CloudFormation template you deployed in the Prepare the environment section created this Private Hosted Zone. Click on the name of the Private Hosted Zone, s3.us-east-1.amazonaws.com:
+SNS enables the system to send automatic notifications instead of requiring administrators to continuously check logs on CloudWatch.
 
-![hosted zone](/images/5-Workshop/5.4-Lambda-deployment/hosted-zone.png)
+Cases that require sending alerts:
 
-2. Create a new record in the Private Hosted Zone:
+- AWS Lambda image processing fails.
+- Unable to read images from S3.
+- Unable to write metadata to DynamoDB.
+- Errors occur during image optimization.
 
-![Create record](/images/5-Workshop/5.4-Lambda-deployment/create-record1.png)
+---
 
-+ Record name and record type keep default options
-+ Alias Button: Click to enable
-+ Route traffic to: Alias to VPC Endpoint
-+ Region: US East (N. Virginia) [us-east-1]
-+ Choose endpoint: Paste the Regional VPC Endpoint DNS name from your text editor (you saved when doing section 4.3)
+### 1. Overview of Notification Flow
 
-![record1](/images/5-Workshop/5.4-Lambda-deployment/record1.png)
-
-3. Click Add another record, and add a second record using the following values. Click Create records when finished to create both records.
-+ Record name: *.
-+ Record type: keep default value (type A)
-+ Alias Button: Click to enable
-+ Route traffic to: Alias to VPC Endpoint
-+ Region: US East (N. Virginia) [us-east-1]
-+ Choose endpoint: Paste the Regional VPC Endpoint DNS name from your text editor
-
-![record 2](/images/5-Workshop/5.4-Lambda-deployment/record2.png)
-
-The new records appear in the Route 53 console:
-
-![result](/images/5-Workshop/5.4-Lambda-deployment/result.png)
-
-#### Create a Resolver Forwarding Rule
-
-Route 53 Resolver Forwarding Rules allow you to forward DNS queries from your VPC to other sources for name resolution. Outside of a workshop environment, you might use this feature to forward DNS queries from your VPC to DNS servers running on-premises. In this section, you will simulate an on-premises conditional forwarder by creating a forwarding rule that forwards DNS queries for Amazon S3 to a Private Hosted Zone running in "VPC Cloud" in-order to resolve the PrivateLink interface endpoint regional DNS name.
-
-1. From the Route 53 management console, click **Inbound endpoints** on the left side bar
-2. In the Inbound endpoints console, click the ID of the inbound endpoint
-
-![Inbound endpoint](/images/5-Workshop/5.4-Lambda-deployment/route53-1.png)
-
-3. Copy the two IP addresses listed to your text editor
-
-![Ip addresses](/images/5-Workshop/5.4-Lambda-deployment/route53-2.png)
-
-4. From the Route 53 menu, choose **Resolver** > **Rules**, and click **Create rule**:
-
-![Ip addresses](/images/5-Workshop/5.4-Lambda-deployment/route53-3.png)
-
-5. In the Create rule console:
-+ Name: myS3Rule
-+ Rule type: Forward
-+ Domain name: s3.us-east-1.amazonaws.com
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/route53-4.png)
-
-+ VPC: VPC On-prem
-+ Outbound endpoint: VPCOnpremOutboundEndpoint
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/route53-5.png)
-
-+ Target IP Addresses: Enter both IP addresses from your text editor (inbound endpoint addresses) and then click Submit
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/route53-6.png)
-You have successfully created resolver forwarding rule. 
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/route53-7.png)
-
-#### Test the on-premises DNS Simulation
-
-1. Connect to **Test-Interface-Endpoint EC2 instance** with **Session manager**
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/test1.png)
-
-2. Test DNS resolution. The dig command will return the IP addresses assigned to the VPC Interface endpoint running in VPC Cloud (your IP's will be different): dig +short s3.us-east-1.amazonaws.com 
-
-{{% notice note %}}
-The IP addresses returned are the VPC endpoint IP addresses, NOT the Resolver IP addresses you pasted from your text editor. The IP addresses of the Resolver endpoint and the VPC endpoint look similar because they are all from the VPC Cloud CIDR block.
-{{% /notice %}}
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/dig.png)
-
-
-3. Navigate to the VPC menu (Endpoints section), select the S3 Interface endpoint. Click the Subnets tab and verify that the IP addresses returned by Dig match the VPC endpoint:
-
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/subnet.png)
-
-4. Return to your shell and use the AWS CLI to test listing your S3 buckets:
+SNS operation flow:
 
 ```
-aws s3 ls --endpoint-url https://s3.us-east-1.amazonaws.com
+AWS Lambda
+      |
+      |
+CloudWatch Logs
+      |
+      |
+CloudWatch Alarm
+      |
+      |
+Amazon SNS Topic
+      |
+      |
+Email Notification
+      |
+      |
+Administrator
 ```
 
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/endpoint.png)
+When the system detects an error:
 
-5. Terminate your Session Manager session:
+1. Lambda records the error during processing.
+2. CloudWatch monitors the execution status.
+3. SNS sends alerts to administrators.
 
-![create rule](/images/5-Workshop/5.4-Lambda-deployment/terminal.png)
+---
 
-In this section you created an Interface endpoint for Amazon S3. This endpoint can be reached from on-premises through Site-to-Site VPN or AWS Direct Connect. Route 53 Resolver outbound endpoints simulated forwarding DNS requests from on-premises to a Private Hosted Zone running the cloud. Route 53 inbound Endpoints recieved the resolution request and returned a response containing the IP addresses of the VPC interface endpoint. Using DNS to resolve the endpoint IP addresses provides high availability in-case of an Availability Zone outage.
+### 2. Access Amazon SNS Console
+
+Open:
+
+```
+AWS Management Console
+```
+
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/aws_console.jpg)
+
+Search for the service:
+
+```
+Simple Notification Service (SNS)
+```
+
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/search_sns.jpg)
+
+In the left navigation panel, select:
+
+```
+Topics
+```
+
+![SNSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/sns_step1.jpg)
+
+Then select:
+
+```
+Create topic
+```
+
+to create a new SNS Topic.
+
+![SNSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/sns_step2.jpg)
+
+---
+
+### 3. Create SNS Topic
+
+In the interface:
+
+```
+Create topic
+```
+
+Select the type:
+
+```
+Standard
+```
+
+Configuration:
+
+#### Name
+
+Enter:
+
+```
+image-processing-alerts
+```
+
+This Topic is used to manage system alert notifications.
+
+---
+
+#### Display name
+
+Enter:
+
+```
+Image Processing Alert
+```
+
+This helps easily identify the purpose of the Topic.
+
+![create-topic](/images/5-Workshop/5.6-Monitoring/sns-notification/create_topic.jpg)
+
+---
+
+### 4. Create Subscription to Receive Notifications
+
+After creating the Topic, select:
+
+```
+Create subscription
+```
+
+Configuration:
+
+## Protocol
+
+Select:
+
+```
+Email
+```
+
+---
+
+## Endpoint
+
+Enter the administrator's email address that receives alerts.
+
+Example:
+
+```
+admin@example.com
+```
+
+Then select:
+
+```
+Create subscription
+```
+
+![create-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/create_sub.jpg)
+
+---
+
+### 5. Confirm Email Subscription
+
+AWS SNS sends a confirmation email to the registered email address.
+
+Open the email and select:
+
+```
+Confirm subscription
+```
+
+![Mail](/images/5-Workshop/5.6-Monitoring/sns-notification/mail_confirm.jpg)
+
+After confirmation, the Subscription status changes to:
+
+```
+Confirmed
+```
+
+![confirm-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/sub_confirm.jpg)
+
+---
+
+### 6. Check SNS Topic
+
+After completing the configuration, the SNS Topic displays:
+
+```
+Topic name:
+
+image-processing-alerts
+```
+
+Subscription:
+
+```
+Protocol:
+
+Email
+
+Status:
+
+Confirmed
+```
+
+![topic-created](/images/5-Workshop/5.6-Monitoring/sns-notification/sub_status.jpg)
+
+---
+
+### 7. Configure Alert Notifications from CloudWatch
+
+To automatically send notifications when the Lambda Function encounters errors, create a **CloudWatch Alarm** based on the Lambda **Errors** metric and configure it to send notifications to **Amazon SNS**.
+
+#### Step 1. Access CloudWatch
+
+Access:
+
+```text
+Amazon CloudWatch
+```
+
+![loudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_console.jpg)
+
+Select:
+
+```text
+Alarms
+    └── Create alarm
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/create_alarm.jpg)
+
+---
+
+#### Step 2. Select Metric
+
+Select the Metric using the following path:
+
+```text
+Lambda
+    └── By Function Name
+            └── image-optimizer-lambda
+                    └── Errors
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/metric_lambda.jpg)
+
+---
+
+#### Step 3. Configure Conditions
+
+Set the alert condition:
+
+```text
+Metric
+
+Errors
+
+Condition
+
+Errors >= 1
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/alarm_condition.jpg)
+
+---
+
+#### Step 4. Select SNS Topic
+
+In the **Notifications** section, select the previously created SNS Topic:
+
+```text
+image-processing-alerts
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_sns_select.jpg)
+
+---
+
+#### Step 5. Complete Alarm Creation
+
+Set the Alarm name, review the configuration, and select **Create alarm**.
+
+After successful creation, the Alarm status will be:
+
+```text
+OK
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/alarm_name.jpg)
+
+When the Lambda Function generates an error, the processing flow is:
+
+```text
+Lambda Error
+      │
+      ▼
+CloudWatch Metric (Errors)
+      │
+      ▼
+CloudWatch Alarm
+      │
+      ▼
+Amazon SNS
+      │
+      ▼
+Administrator Email
+```
+
+---
+
+### 8. Test Notification Sending
+
+After completing the CloudWatch Alarm and Amazon SNS configuration, test the system's notification capability.
+
+#### Step 1. Create an Error
+
+An error can be created using one of the following methods:
+
+- Upload an unsupported image format.
+- Remove Lambda Function permission to access Amazon S3.
+- Intentionally create an Exception in the Lambda source code for testing.
+
+---
+
+#### Step 2. Check CloudWatch Logs
+
+After Lambda encounters an error, access:
+
+```text
+Amazon CloudWatch
+
+Logs
+
+Log groups
+
+/aws/lambda/image-optimizer-lambda
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log.jpg)
+
+CloudWatch records error information, for example:
+
+```text
+ERROR
+
+Image processing failed
+```
+
+![CloudWatch](static/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
+
+---
+
+#### Step 3. Check Alarm Status
+
+After CloudWatch collects the Metric, the Alarm changes from:
+
+```text
+OK
+```
+
+to:
+
+```text
+In alarm
+```
+
+![CloudWatch](images/5-Workshop/5.6-Monitoring/sns-notification/alarm_trigger.jpg)
+
+---
+
+#### Step 4. Check Email Notification
+
+Amazon SNS automatically sends an email notification to the registered address.
+
+Example:
+
+```text
+Subject
+
+AWS Notification
+```
+
+```text
+Message
+
+Image processing failed.
+
+Function:
+image-optimizer-lambda
+
+Status:
+FAILED
+```
+
+![SNS](static/images/5-Workshop/5.6-Monitoring/sns_email.jpg)
+
+The result shows that the system can automatically detect Lambda Function errors and successfully send notifications through Amazon SNS.
+
+---
+
+### 9. Result
+
+After completing the Amazon SNS configuration, the system can automatically send alerts when errors occur.
+
+Achieved results:
+
+- SNS Topic is created successfully.
+- Administrator email is registered to receive notifications.
+- CloudWatch can be connected to send alerts.
+- Supports faster incident detection and troubleshooting.
+
+Complete Monitoring Flow:
+
+```
+                AWS Lambda
+                     |
+                     |
+              Image Processing
+                     |
+          +----------+----------+
+          |                     |
+          v                     v
+   CloudWatch Logs        DynamoDB
+          |
+          |
+   CloudWatch Alarm
+          |
+          |
+          v
+     Amazon SNS
+          |
+          |
+          v
+    Administrator
+```
+
+After this step, the **Automatic Image Optimization System on AWS** has completed the monitoring and automatic alerting capability during the image processing workflow.

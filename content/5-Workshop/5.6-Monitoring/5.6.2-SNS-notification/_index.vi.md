@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 5.6.2 </b> "
 ---
 
-# Cấu hình SNS Notification gửi cảnh báo
-
 Trong hệ thống **Automatic Image Optimization System on AWS**, Amazon SNS được sử dụng để gửi thông báo cảnh báo đến quản trị viên khi quá trình xử lý ảnh xảy ra lỗi.
 
 SNS giúp hệ thống có khả năng thông báo tự động thay vì yêu cầu quản trị viên phải liên tục kiểm tra log trên CloudWatch.
@@ -21,7 +19,7 @@ Các trường hợp cần gửi cảnh báo:
 
 ---
 
-# 1. Tổng quan luồng gửi Notification
+### 1. Tổng quan luồng gửi Notification
 
 Luồng hoạt động của SNS:
 
@@ -52,7 +50,7 @@ Khi hệ thống phát hiện lỗi:
 
 ---
 
-# 2. Truy cập Amazon SNS Console
+### 2. Truy cập Amazon SNS Console
 
 Mở:
 
@@ -60,18 +58,21 @@ Mở:
 AWS Management Console
 ```
 
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/aws_console.jpg)
 Tìm kiếm dịch vụ:
 
 ```
 Simple Notification Service (SNS)
 ```
 
+![AWSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/search_sns.jpg)
 Trong thanh điều hướng bên trái chọn:
 
 ```
 Topics
 ```
 
+![SNSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/sns_step1.jpg)
 Sau đó chọn:
 
 ```
@@ -80,11 +81,11 @@ Create topic
 
 để tạo SNS Topic mới.
 
-![sns-console](/images/5-Workshop/5.6-Monitoring/sns-notification/sns-console.png)
+![SNSConsole](/images/5-Workshop/5.6-Monitoring/sns-notification/sns_step2.jpg)
 
 ---
 
-# 3. Tạo SNS Topic
+### 3. Tạo SNS Topic
 
 Trong giao diện:
 
@@ -100,7 +101,7 @@ Standard
 
 Cấu hình:
 
-## Name
+#### Name
 
 Nhập:
 
@@ -112,7 +113,7 @@ Topic này được sử dụng để quản lý các thông báo cảnh báo c�
 
 ---
 
-## Display name
+#### Display name
 
 Nhập:
 
@@ -122,11 +123,11 @@ Image Processing Alert
 
 Giúp dễ dàng nhận biết mục đích của Topic.
 
-![create-topic](/images/5-Workshop/5.6-Monitoring/sns-notification/create-topic.png)
+![create-topic](/images/5-Workshop/5.6-Monitoring/sns-notification/create_topic.jpg)
 
 ---
 
-# 4. Tạo Subscription nhận thông báo
+### 4. Tạo Subscription nhận thông báo
 
 Sau khi tạo Topic, chọn:
 
@@ -162,11 +163,11 @@ Sau đó chọn:
 Create subscription
 ```
 
-![create-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/create-subscription.png)
+![create-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/create_sub.jpg)
 
 ---
 
-# 5. Xác nhận Email Subscription
+### 5. Xác nhận Email Subscription
 
 AWS SNS sẽ gửi email xác nhận đến địa chỉ đã đăng ký.
 
@@ -176,17 +177,19 @@ Mở email và chọn:
 Confirm subscription
 ```
 
+![Mail](/images/5-Workshop/5.6-Monitoring/sns-notification/mail_confirm.jpg)
+
 Sau khi xác nhận, trạng thái Subscription sẽ chuyển thành:
 
 ```
 Confirmed
 ```
 
-![confirm-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/confirm-subscription.png)
+![confirm-subscription](/images/5-Workshop/5.6-Monitoring/sns-notification/sub_confirm.jpg)
 
 ---
 
-# 6. Kiểm tra SNS Topic
+### 6. Kiểm tra SNS Topic
 
 Sau khi cấu hình hoàn tất, SNS Topic hiển thị:
 
@@ -203,78 +206,191 @@ Protocol:
 
 Email
 
-
 Status:
 
 Confirmed
 ```
 
-![topic-created](/images/5-Workshop/5.6-Monitoring/sns-notification/topic-created.png)
+![topic-created](/images/5-Workshop/5.6-Monitoring/sns-notification/sub_status.jpg)
 
 ---
 
-# 7. Cấu hình gửi cảnh báo từ CloudWatch
+### 7. Cấu hình gửi cảnh báo từ CloudWatch
 
-Để SNS nhận được cảnh báo, tạo CloudWatch Alarm dựa trên trạng thái Lambda.
+Để hệ thống tự động gửi thông báo khi Lambda Function xảy ra lỗi, tiến hành tạo **CloudWatch Alarm** dựa trên metric **Errors** của Lambda và cấu hình gửi thông báo đến **Amazon SNS**.
 
-Ví dụ điều kiện:
+#### Bước 1. Truy cập CloudWatch
 
+Truy cập:
+
+```text
+Amazon CloudWatch
 ```
-Metric:
 
-Lambda Errors
+![loudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_console.jpg)
 
+Chọn:
 
-Condition:
+```text
+Alarms
+    └── Create alarm
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/create_alarm.jpg)
+
+---
+
+#### Bước 2. Chọn Metric
+
+Chọn Metric theo đường dẫn:
+
+```text
+Lambda
+    └── By Function Name
+            └── image-optimizer-lambda
+                    └── Errors
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/metric_lambda.jpg)
+
+---
+
+#### Bước 3. Cấu hình điều kiện
+
+Thiết lập điều kiện cảnh báo:
+
+```text
+Metric
+
+Errors
+
+Condition
 
 Errors >= 1
 ```
 
-Khi Lambda xảy ra lỗi:
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/alarm_condition.jpg)
 
+---
+
+#### Bước 4. Chọn SNS Topic
+
+Trong phần **Notifications**, chọn SNS Topic đã tạo trước đó:
+
+```text
+image-processing-alerts
 ```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_sns_select.jpg)
+
+---
+
+#### Bước 5. Hoàn tất tạo Alarm
+
+Đặt tên Alarm, xem lại cấu hình và chọn **Create alarm**.
+
+Sau khi tạo thành công, Alarm sẽ ở trạng thái:
+
+```text
+OK
+```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/alarm_name.jpg)
+
+Khi Lambda Function phát sinh lỗi, quy trình xử lý sẽ diễn ra như sau:
+
+```text
 Lambda Error
-      |
-      |
+      │
+      ▼
+CloudWatch Metric (Errors)
+      │
+      ▼
 CloudWatch Alarm
-      |
-      |
-SNS Topic
-      |
-      |
+      │
+      ▼
+Amazon SNS
+      │
+      ▼
 Administrator Email
 ```
 
 ---
 
-# 8. Kiểm tra gửi Notification
+### 8. Kiểm tra gửi Notification
 
-Thực hiện kiểm tra bằng cách tạo một lỗi trong quá trình xử lý ảnh.
+Sau khi hoàn thành cấu hình CloudWatch Alarm và Amazon SNS, tiến hành kiểm tra khả năng gửi thông báo của hệ thống.
 
-Ví dụ:
+#### Bước 1. Tạo lỗi
 
-- Upload file ảnh không được hỗ trợ.
-- Lambda không có quyền truy cập S3.
+Có thể tạo lỗi bằng một trong các cách sau:
 
-Sau khi lỗi xảy ra:
+- Upload tệp không đúng định dạng.
+- Lambda Function không có quyền truy cập Amazon S3.
+- Chủ động tạo Exception trong mã nguồn Lambda để kiểm thử.
 
-CloudWatch ghi nhận:
+---
 
+#### Bước 2. Kiểm tra CloudWatch Logs
+
+Sau khi Lambda gặp lỗi, truy cập:
+
+```text
+Amazon CloudWatch
+
+Logs
+
+Log groups
+
+/aws/lambda/image-optimizer-lambda
 ```
+
+![CloudWatch](/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log.jpg)
+
+CloudWatch sẽ ghi nhận thông tin lỗi, ví dụ:
+
+```text
 ERROR
 
 Image processing failed
 ```
 
-SNS gửi email:
+![CloudWatch](static/images/5-Workshop/5.6-Monitoring/sns-notification/cw_log_error.jpg)
 
+---
+
+#### Bước 3. Kiểm tra trạng thái Alarm
+
+Sau khi CloudWatch thu thập Metric, Alarm sẽ chuyển từ trạng thái:
+
+```text
+OK
 ```
-Subject:
+
+sang
+
+```text
+In alarm
+```
+
+![CloudWatch](images/5-Workshop/5.6-Monitoring/sns-notification/alarm_trigger.jpg)
+
+---
+
+#### Bước 4. Kiểm tra Email Notification
+
+Amazon SNS sẽ tự động gửi email thông báo đến địa chỉ đã đăng ký.
+
+Ví dụ:
+
+```text
+Subject
 
 AWS Notification
+```
 
-
-Message:
+```text
+Message
 
 Image processing failed.
 
@@ -285,9 +401,13 @@ Status:
 FAILED
 ```
 
+![SNS](static/images/5-Workshop/5.6-Monitoring/sns_email.jpg)
+
+Kết quả cho thấy hệ thống đã tự động phát hiện lỗi của Lambda Function và gửi thông báo thành công thông qua Amazon SNS.
+
 ---
 
-# 9. Kết quả
+### 9. Kết quả
 
 Sau khi hoàn thành cấu hình Amazon SNS, hệ thống có khả năng gửi cảnh báo tự động khi xảy ra lỗi.
 
