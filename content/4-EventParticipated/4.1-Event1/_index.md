@@ -95,6 +95,7 @@ pre: " <b> 4.1. </b> "
 
 ### Event Images
 
-- Add team photos here
+![Hình ảnh tham gia sự kiện 1](/images/event1.jpg)
+![Hình ảnh tham gia sự kiện 1](/images/event2.jpg)
 
 > Overall, the Cloud Architect Event was a valuable experience that strengthened my Cloud knowledge while improving system design thinking and teamwork skills through a practical and competitive format.

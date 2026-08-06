@@ -95,5 +95,7 @@ pre: " <b> 4.1. </b> "
 
 #### Một số hình ảnh khi tham gia sự kiện
 
-- Thêm các hình ảnh của các bạn tại đây
-  > Tổng thể, Cloud Architect Event là một hoạt động giúp củng cố kiến thức Cloud, đồng thời rèn luyện tư duy kiến trúc hệ thống và kỹ năng làm việc nhóm thông qua hình thức thi đấu mang tính thực chiến.
+![Hình ảnh tham gia sự kiện 1](/images/event1.jpg)
+![Hình ảnh tham gia sự kiện 1](/images/event2.jpg)
+
+> Tổng thể, Cloud Architect Event là một hoạt động giúp củng cố kiến thức Cloud, đồng thời rèn luyện tư duy kiến trúc hệ thống và kỹ năng làm việc nhóm thông qua hình thức thi đấu mang tính thực chiến.
