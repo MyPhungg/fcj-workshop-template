@@ -36,7 +36,7 @@ During my internship, I participated in 2 events. Each event was a memorable exp
 
  **Event name:** FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!
 
- **Time:** 09:00 on 25/07/2025
+ **Time:** 09:00 on 25/07/2026
 
  **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
 
