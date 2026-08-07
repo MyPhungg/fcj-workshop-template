@@ -1,7 +1,7 @@
 ---
 title: "AWS CDK – Infrastructure as Code for Modern Cloud Infrastructure"
 date: 2026-08-04
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---

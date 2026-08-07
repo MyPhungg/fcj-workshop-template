@@ -1,7 +1,7 @@
 ---
 title: "AWS CDK – Infrastructure as Code cho hạ tầng đám mây hiện đại"
 date: 2026-08-04
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
