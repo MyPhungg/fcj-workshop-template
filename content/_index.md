@@ -27,7 +27,7 @@ chapter: false
 
 &emsp; **Internship Duration:** From 22/06/2026 to 15/08/2026
 
-![My profile picture](/images/avt-cv.jpg)
+![My profile picture](/images/avt-cv.jpg?width=150px)
 
 ### Report Content
 
