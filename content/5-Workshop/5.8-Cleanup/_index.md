@@ -1,9 +1,9 @@
 ---
 title: "Cleaning Up AWS Resources After Deployment"
 date: 2026-08-04
-weight: 7
+weight: 8
 chapter: false
-pre: " <b> 5.7 </b> "
+pre: " <b> 5.8 </b> "
 ---
 
 After completing the deployment of the **Automatic Image Optimization System on AWS**, it is recommended to clean up any AWS resources that are no longer needed. This helps prevent unexpected charges and ensures that the AWS environment remains well organized and efficiently managed.

@@ -1,9 +1,9 @@
 ---
 title: "Dọn dẹp tài nguyên AWS sau triển khai"
 date: 2026-08-04
-weight: 7
+weight: 8
 chapter: false
-pre: " <b> 5.7 </b> "
+pre: " <b> 5.8 </b> "
 ---
 
 Sau khi hoàn thành quá trình triển khai hệ thống **Automatic Image Optimization System on AWS**, cần tiến hành dọn dẹp các tài nguyên AWS không còn sử dụng nhằm tránh phát sinh chi phí ngoài mong muốn và đảm bảo môi trường AWS luôn được quản lý hiệu quả.
