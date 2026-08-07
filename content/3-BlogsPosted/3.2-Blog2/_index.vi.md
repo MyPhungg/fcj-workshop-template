@@ -1,7 +1,7 @@
 ---
 title: "Event-Driven Architecture – Nền tảng cho các hệ thống Serverless trên AWS"
 date: 2026-08-04
-weight: 1
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
