@@ -1,26 +1,27 @@
+# 1. Đổi baseURL về chỉ chứa domain (không kèm tên repo)
+baseURL = "https://myphungg.github.io/"
+
+# 2. Bật relativeURLs để Hugo tự tính đường dẫn tương đối chính xác cho theme learn
 relativeURLs = true
 canonifyURLs = false
+
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
-baseURL = "https://myphungg.github.io/fcj-workshop-template/"
-# Change the default theme to be use when building the site with Hugo
+
 theme = "hugo-theme-learn"
 
-# For search functionality
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
 
 [params]
-  # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "workshop"
-  # Git hub repo link
   editURL = "https://github.com/myphungg/fcj-workshop-template/edit/main/content/"
   description = "Báo cáo kết quả thực hành workshop"
   author = "bienthimyphung@gmail.com"
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
-  
+
 [Languages]
 [Languages.en]
 title = "Internship Report"
