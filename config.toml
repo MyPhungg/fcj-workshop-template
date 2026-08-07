@@ -1,4 +1,4 @@
-relativeURLs = false
+relativeURLs = true
 canonifyURLs = false
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false

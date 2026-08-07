@@ -1,0 +1,14 @@
+{{- $url := .Destination -}}
+{{- if not (or (hasPrefix $url "http://") (hasPrefix $url "https://")) -}}
+{{- /* Strip any leading relative dots or slashes to standardize to site root path */ -}}
+{{- $cleanPath := $url -}}
+{{- if hasPrefix $cleanPath "/" -}}
+{{- $cleanPath = strings.TrimPrefix "/" $cleanPath -}}
+{{- else if hasPrefix $cleanPath "../" -}}
+{{- $cleanPath = replaceRE "^(\\.\\./)+" "" $cleanPath -}}
+{{- else if hasPrefix $cleanPath "./" -}}
+{{- $cleanPath = strings.TrimPrefix "./" $cleanPath -}}
+{{- end -}}
+{{- $url = $cleanPath | relURL -}}
+{{- end -}}
+<img src="{{ $url }}" alt="{{ .Text }}" {{- with .Title }} title="{{ . }}" {{- end }} />
