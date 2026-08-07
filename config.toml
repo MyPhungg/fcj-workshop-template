@@ -2,7 +2,7 @@ relativeURLs = true
 canonifyURLs = false
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
-baseURL = "http://localhost:1313/"
+baseURL = "https://myphungg.github.io/fcj-workshop-template/"
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
 
