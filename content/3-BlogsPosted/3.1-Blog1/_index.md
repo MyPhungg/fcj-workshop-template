@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
-# Amazon SQS – The Key to Asynchronous Architecture on AWS
-
 During my internship and while exploring serverless services on AWS, I published a technical blog about Amazon Simple Queue Service (Amazon SQS) on the AWS Study Group community. The blog introduces the role of Amazon SQS in building Asynchronous Architecture, highlighting how it improves application scalability, reduces system workload, and enhances reliability.
 
 The main topics covered in the blog include:

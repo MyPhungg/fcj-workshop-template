@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# Event-Driven Architecture – The Foundation of Serverless Systems on AWS
-
 During my internship and while exploring serverless architectures on AWS, I published a technical blog about Event-Driven Architecture (EDA) on the AWS Study Group community. The blog introduces the fundamental concepts of event-driven architecture and explains its role in building modern applications that are automated, scalable, and capable of responding to events in near real time.
 
 The main topics covered in the blog include:

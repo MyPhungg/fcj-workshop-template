@@ -10,19 +10,27 @@ During my internship, I participated in 2 events. Each event was a memorable exp
 
 ### [Event 1](4.1-Event1/)
 
- **Event name:** Cloud Architect Event
+    **Time:** 09:00 on 20/06/2026
 
- **Time:** 09:00 on 20/06/2026
+    **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
 
- **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
-
- **Role in the event:** Competition participant
+    **Role in the event:** Competition participant
 
 ### [Event 2](4.2-Event2/)
 
  **Event name:** FCAJ x Agentic AI Build Week: Show Up. Build. Pitch. WIN!
 
  **Time:** 09:00 on 25/07/2026
+
+ **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
+
+ **Role in the event:** Attendee
+
+### [Event 3](4.3-Event3/)
+
+ **Event name:** AWS First Cloud AI Journey – Agent Forge Deep Dive Day 2
+
+ **Time:** 09:00 on 08/08/2026
 
  **Location:** 26th Floor, Bitexco Building, 02 Hai Trieu Street, Sai Gon Ward, Ho Chi Minh City
 

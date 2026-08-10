@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# AWS CDK – Infrastructure as Code for Modern Cloud Infrastructure
-
 During my internship and while learning about Infrastructure as Code (IaC) on AWS, I published a technical blog about AWS Cloud Development Kit (AWS CDK) on the AWS Study Group community. The blog introduces AWS CDK as a powerful framework for defining, managing, and deploying cloud infrastructure using code, enabling greater automation and more efficient infrastructure management for AWS projects.
 
 The main topics covered in the blog include:

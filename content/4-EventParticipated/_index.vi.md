@@ -27,3 +27,13 @@ Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là
 &emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự
+
+### [Event 3](4.3-Event3/)
+
+ **Tên sự kiện:** AWS First Cloud AI Journey – Agent Forge Deep Dive Day 2
+
+ **Thời gian:** 09:00 ngày 08/08/2026
+
+ **Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
+
+ **Vai trò trong sự kiện:** Người tham dự

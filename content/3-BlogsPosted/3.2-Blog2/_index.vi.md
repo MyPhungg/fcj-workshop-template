@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# Event-Driven Architecture – Nền tảng cho các hệ thống Serverless trên AWS
-
 Trong quá trình thực tập và tìm hiểu về các kiến trúc Serverless trên AWS, em đã thực hiện một bài chia sẻ về Event-Driven Architecture (EDA) trên cộng đồng AWS Study Group. Nội dung bài viết giới thiệu nguyên lý hoạt động của kiến trúc hướng sự kiện và vai trò của mô hình này trong việc xây dựng các ứng dụng hiện đại có khả năng tự động hóa, mở rộng và phản hồi theo thời gian thực.
 
 Các nội dung chính của bài viết gồm:

@@ -6,8 +6,6 @@ chapter: false
 pre: " <b> 3.3. </b> "
 ---
 
-# AWS CDK – Infrastructure as Code cho hạ tầng đám mây hiện đại
-
 Trong quá trình thực tập và tìm hiểu về Infrastructure as Code (IaC) trên AWS, em đã thực hiện một bài chia sẻ về AWS Cloud Development Kit (AWS CDK) trên cộng đồng AWS Study Group. Nội dung bài viết giới thiệu AWS CDK như một công cụ giúp xây dựng, quản lý và triển khai hạ tầng đám mây bằng mã nguồn, góp phần nâng cao khả năng tự động hóa và quản lý hạ tầng trong các dự án AWS.
 
 Các nội dung chính của bài viết gồm:
