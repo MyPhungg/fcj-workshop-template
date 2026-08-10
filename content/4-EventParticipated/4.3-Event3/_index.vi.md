@@ -534,6 +534,4 @@ Qua sự kiện, tôi nhận thức rõ hơn rằng việc xây dựng AI Agent 
 
 ### Một Số Hình Ảnh Khi Tham Gia Sự Kiện
 
-_Chèn hình ảnh banner sự kiện và các hình ảnh trong quá trình tham gia Hands-on Lab tại đây._
-
 ![AWS First Cloud AI Journey – Agent Forge Deep Dive 2026](../../images/agent-forge.png)
