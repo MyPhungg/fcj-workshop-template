@@ -534,6 +534,4 @@ These are valuable areas of knowledge for my learning journey and future develop
 
 ### Some Photos from the Event
 
-**Insert photos of the event banner and images taken during the Hands-on Lab here.**
-
 ![AWS First Cloud AI Journey – Agent Forge Deep Dive 2026](../../images/agent-forge.png)
